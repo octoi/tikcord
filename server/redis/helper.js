@@ -16,7 +16,7 @@ module.exports = {
 
     createRoomInDb: (roomData) => {
         return new Promise((resolve, reject) => {
-            client.lpush("rooms", roomData, (err, reply) => {
+            client.lpush("rooms", JSON.stringify(roomData), (err, reply) => {
                 if(err){
                     console.log('[ERROR] Cannot add room data to redis')
                     console.log(err.message);
