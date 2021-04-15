@@ -1,7 +1,7 @@
 
 module.exports = {
     Query: {
-        getRooms = async (_, { room }) => {
+        getRooms = async () => {
             // get rooms from redis
         }
     },
