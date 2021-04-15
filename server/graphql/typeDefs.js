@@ -15,10 +15,15 @@ const typeDefs = gql`
     },
     type Query{
         getRooms: [Room],
-        getRoomUsers(room: ID!): Room, 
+        getRoomUsers(room: ID!): [User!], 
     },
+    input Host{
+        name: String!,
+        email: String!,
+        profile: String!,
+    }
     type Mutation{
-        createRoom(name: String!, description: String!, host: User!): Room!,
+        createRoom(name: String!, description: String!, host: Host!): Room!,
     }
 `
 
