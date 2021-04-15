@@ -1,0 +1,3 @@
+# CHATCORD 💩
+
+Redis Hackathon Project
