@@ -1,7 +1,7 @@
 
 module.exports = {
     Query: {
-        getRoomUser = async (_, { room }) => {
+        async getRoomUsers(_, { room }) {
             // get all room user
         }
     },

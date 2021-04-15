@@ -1,12 +1,12 @@
 
 module.exports = {
     Query: {
-        getRooms = async () => {
+        async getRooms() {
             // get rooms from redis
         }
     },
     Mutation: {
-        createRoom = async (_, { host, name, description }) => {
+        async createRoom(_, { host, name, description }) {
             // create room on redis
         }
     }
