@@ -19,7 +19,6 @@ const typeDefs = gql`
     },
     type Mutation{
         createRoom(name: String!, description: String!, host: User!): Room!,
-        joinRoom(user: User!, room: ID!): Room!, 
     }
 `
 
