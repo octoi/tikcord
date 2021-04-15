@@ -1,13 +1,20 @@
+const { createRoomInDb, getRoomsFromDb } = require("../../redis/helper");
 
 module.exports = {
     Query: {
         async getRooms() {
-            // get rooms from redis
+            const rooms = [];
+
+            const roomsFromDb = await getRoomsFromDb();
+            roomsFromDb.map(room => rooms.push(JSON.parse(room)));
+
+            return rooms;
         }
     },
     Mutation: {
-        async createRoom(_, { host, name, description }) {
-            // create room on redis
+        async createRoom(_, roomData) {
+            await createRoomInDb(roomData);
+            return roomData;
         }
     }
 }
