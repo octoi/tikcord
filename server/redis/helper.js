@@ -1,7 +1,7 @@
 const client = require("./index");
 
 module.exports = {
-    getAllRooms: () => {
+    getRoomsFromDb: () => {
         return new Promise((resolve, reject) => {
             client.lrange("rooms", 0, -1, (err, reply)=>{
                 if(err){
@@ -14,7 +14,7 @@ module.exports = {
         });
     },
 
-    createRoom: (roomData) => {
+    createRoomInDb: (roomData) => {
         return new Promise((resolve, reject) => {
             client.lpush("rooms", roomData, (err, reply) => {
                 if(err){
