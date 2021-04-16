@@ -1,32 +1,31 @@
 const { createRoomInDb, getRoomsFromDb } = require("../../redis/helper");
+const { getAllData, insertData } = require("../../postgres/helper");
 const shortid = require("shortid");
 
 module.exports = {
     Query: {
         async getRooms() {
-            const rooms = [];
+            // const rooms = [];
 
-            const roomsFromDb = await getRoomsFromDb();
-            roomsFromDb.map(room => {
-                room = JSON.parse(room);
-                room.host = JSON.parse(room.host);
-                rooms.push(room);
-            });
+            // const roomsFromDb = await getRoomsFromDb();
+            // roomsFromDb.map(room => {
+            //     room = JSON.parse(room);
+            //     room.host = JSON.parse(room.host);
+            //     rooms.push(room);
+            // });
 
+            const rooms = await getAllData();
+            console.log(rooms)
             return rooms;
         }
     },
     Mutation: {
-        async createRoom(_, { name, description, host }) {
-            let roomData = {
-                id: shortid.generate(),
-                name,
-                description,
-                host: JSON.stringify(host)
-            }
+        async createRoom(_, { data }) {
+            let id = shortid.generate();
 
-            await createRoomInDb(roomData);
-            return { ...roomData, host };
+            // await createRoomInDb(roomData);
+            const res = await insertData(id, data)
+            return res;
         }
     }
 }
