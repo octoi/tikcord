@@ -7,7 +7,7 @@ const typeDefs = gql`
         getRoomUsers(room: ID!): [String],
     },
     type Mutation{
-        createRoom(data: String!): Room!,
+        createRoom(data: String!): String!,
     }
 `
 
