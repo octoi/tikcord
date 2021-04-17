@@ -28,6 +28,7 @@ const typeDefs = gql`
         email: String!,
         profile: String!,
         bio: String!,
+        token: String!
     },
     type Creator{
         id: ID!,
