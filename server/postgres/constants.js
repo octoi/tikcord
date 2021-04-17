@@ -1,6 +1,5 @@
-module.exports = {
-    userTable = 'tikuser',
-    videoTable = 'tikvideo',
-    likeTable = 'tiklike',
-    commentTable = 'tikcomment',
-}
+const userTable = 'tikuser'
+const videoTable = 'tikvideo'
+const likeTable = 'tiklike'
+const commentTable = 'tikcomment'
+module.exports = { userTable, videoTable, likeTable, commentTable }
