@@ -6,6 +6,7 @@ CREATE TABLE tikuser{
     email TEXT,
     password: TEXT,
     bio: TEXT,
+    profile: TEXT,
 };
 
 CREATE TABLE tikvideo{
