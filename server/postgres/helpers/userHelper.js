@@ -1,5 +1,5 @@
-const pool = require("./setup");
-const { userTable } = require("./constants");
+const pool = require("../setup");
+const { userTable } = require("../constants");
 
 module.exports = {
     registerUser: (name, email, password) => {
