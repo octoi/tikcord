@@ -52,6 +52,7 @@ const typeDefs = gql`
 
         likeVideo(video: ID!): Like!,
         commentVideo(video: ID!, content: String!): Comment!,
+        deleteComment(comment: ID!): String!,
     }
 
 `
