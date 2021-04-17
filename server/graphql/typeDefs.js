@@ -1,17 +1,58 @@
 const gql = require("graphql-tag");
 
 const typeDefs = gql`
+    type Like{
+        id: ID!
+        creator: User!,
+    },
+    type Comment{
+        id: ID!,
+        createdAt: String!,
+        creator: String!,
+        content: String!
+    },
+    type Video{
+        id: ID!,
+        creator: User!,
+        content: String!,
+        description: String!,
+        createdAt: String!,
+        likeCount: Int!,
+        commentCount: Int!,
+    },
+
     type User{
+        id: ID!,
         name: String!,
         password: String!,
         email: String!,
         profile: String!,
         bio: String!,
     },
-    type Video{
+    type Creator{
         id: ID!,
-        creator: ,
-    } 
+        user: User!,
+        videos: [Video!]
+    }
+
+    
+    type Query{
+        getVideos: [Video!],
+        getUserVideo(user: ID!): Creator!,
+    },
+
+
+    type Mutation{
+        register(name: String!, email: String!, password: String!): User!,
+        login(email: String!, password: String!): User!,
+
+        createVideo(content: String!, description: String!): Video!,
+        deleteVideo: String!,
+
+        likeVideo(video: ID!): Like!,
+        commentVideo(video: ID!, content: String!): Comment!,
+    }
+
 `
 
 module.exports = typeDefs;
