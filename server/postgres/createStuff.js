@@ -5,10 +5,10 @@ module.exports = (pool) => {
             name TEXT,
             email TEXT,
             password TEXT,
-            bio TEXT
+            bio TEXT,
+            profile TEXT
         )
     `);
-    pool.query("SELECT * FROM tikuser")
     pool.query(`
         CREATE TABLE IF NOT EXISTS tikvideo(
             id SERIAL PRIMARY KEY,
