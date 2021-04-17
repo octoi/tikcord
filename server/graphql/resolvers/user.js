@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
 const { registerUser } = require("../../postgres/helper");
+const { UserInputError } = require("apollo-server");
+
 
 const Mutation = {
     register: async (_, { name, email, password, bio, profile }) => {
