@@ -1,7 +1,10 @@
 const pool = require("../setup");
-const { videoTable, likeTable, commentTable } = require("../constants");
+const { videoTable, likeTable, commentTable, userTable } = require("../constants");
 
 module.exports = {
+
+    // get videos
+
     getAllVideos: () => {
         return new Promise((resolve, reject) => {
             pool.query(`SELECT * FROM tikvideo`).then(videos => {
@@ -13,11 +16,24 @@ module.exports = {
         });
     },
 
+    getUserVideos: (email) => {
+        return new Promise((resolve, reject) => {
+            pool.query(`SELECT * FROM ${videoTable} WHERE user = $1`, [email]).then(data => {
+                resolve(data.rows);
+            }).catch(err => {
+                console.log(err.message);
+                reject();
+            })
+        });
+    },
+
+    // create videos
+
     createVideo: (videoData) => {
         return new Promise((resolve, reject) => {
-            const { creator, content, description, createdAt, likeCount, commentCount } = videoData;
+            const { creator, content, description, createdAt, likeCount, commentCount, user } = videoData;
 
-            pool.query(`INSERT INTO ${videoTable} (creator, content, description, createdAt, likeCount, commentCount) VALUES ($1, $2, $3, $4, $5, $6)`, [creator, content, description, createdAt, likeCount, commentCount]).then(() => {
+            pool.query(`INSERT INTO ${videoTable} (creator, content, description, createdAt, likeCount, commentCount, user) VALUES ($1, $2, $3, $4, $5, $6, $7)`, [creator, content, description, createdAt, likeCount, commentCount, user]).then(() => {
                 pool.query(`SELECT * FROM ${videoTable} WHERE createdAt = $1`, [createdAt]).then(({ rows }) => {
                     resolve({ ...videoData, id: rows[0].id });
                 })
@@ -27,6 +43,7 @@ module.exports = {
             })
         });
     },
+
 
     // get video utils 
 
@@ -50,5 +67,5 @@ module.exports = {
                 reject();
             })
         });
-    }
+    },
 }

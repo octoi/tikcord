@@ -4,12 +4,12 @@ const { createVideo, getAllVideos, getUserVideos } = require("../../postgres/hel
 const Mutation = {
 
     createVideo: async (_, videoData, context) => {
-        const user = checkAuth(context);
+        const userData = checkAuth(context);
 
         videoData = {
             ...videoData,
-            creator: JSON.stringify(user),
-            user: user.email,
+            creator: JSON.stringify(userData),
+            user: userData.email,
             createdAt: Date.now(),
             likeCount: 0,
             commentCount: 0,
@@ -18,7 +18,7 @@ const Mutation = {
         const data = await createVideo(videoData);
         return {
             ...data,
-            creator: user
+            creator: userData
         }
 
     }
