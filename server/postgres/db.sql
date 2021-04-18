@@ -11,7 +11,7 @@ CREATE TABLE tikuser(
 
 CREATE TABLE tikvideo(
     id SERIAL PRIMARY KEY,
-    creator: BIGINT REFERENCES tikuser(id),
+    creator: TEXT,
     content: TEXT,
     description: TEXT,
     createdAt: TEXT,
@@ -19,12 +19,12 @@ CREATE TABLE tikvideo(
 
 CREATE TABLE tiklike(
     id SERIAL PRIMARY KEY,
-    creator: BIGINT REFERENCES tikuser(id),
+    creator: TEXT,
 )
 
 CREATE TABLE tikcomment(
     id SERIAL PRIMARY KEY,
     createdAt: TEXT,
-    creator: BIGINT REFERENCES tikuser(id),
+    creator: TEXT,
     content: TEXT,
 )

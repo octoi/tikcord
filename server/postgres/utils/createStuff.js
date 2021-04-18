@@ -12,7 +12,7 @@ module.exports = (pool) => {
     pool.query(`
         CREATE TABLE IF NOT EXISTS tikvideo(
             id SERIAL PRIMARY KEY,
-            creator BIGINT REFERENCES tikuser(id),
+            creator TEXT,
             content TEXT,
             description TEXT,
             createdAt TEXT,
@@ -23,14 +23,14 @@ module.exports = (pool) => {
     pool.query(`
         CREATE TABLE IF NOT EXISTS tiklike(
             id SERIAL PRIMARY KEY,
-            creator BIGINT REFERENCES tikuser(id)
+            creator TEXT
         )
     `)
     pool.query(`
         CREATE TABLE IF NOT EXISTS tikcomment(
             id SERIAL PRIMARY KEY,
             createdAt TEXT,
-            creator BIGINT REFERENCES tikuser(id),
+            creator TEXT,
             content TEXT
         )
     `)
