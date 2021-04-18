@@ -20,6 +20,7 @@ CREATE TABLE tikvideo(
 CREATE TABLE tiklike(
     id SERIAL PRIMARY KEY,
     creator: TEXT,
+    video TEXT
 )
 
 CREATE TABLE tikcomment(
@@ -27,4 +28,5 @@ CREATE TABLE tikcomment(
     createdAt: TEXT,
     creator: TEXT,
     content: TEXT,
+    video TEXT
 )
