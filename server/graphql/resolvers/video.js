@@ -1,5 +1,5 @@
 const checkAuth = require("../utils/checkAuth");
-const { createVideo } = require("../../postgres/helper");
+const { createVideo, getAllVideos } = require("../../postgres/helper");
 
 const Mutation = {
 
@@ -27,7 +27,7 @@ const Mutation = {
 const Query = {
 
     getVideos: async () => {
-        
+
     }
 
 }

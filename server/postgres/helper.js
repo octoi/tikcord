@@ -1,7 +1,7 @@
-const { registerUser } = require("./helpers/userHelper");
-const { createVideo } = require("./helpers/videoHelper");
+const userHelper = require("./helpers/userHelper");
+const videoHelper = require("./helpers/videoHelper");
 
 module.exports = {
-    registerUser,
-    createVideo
+    ...userHelper,
+    ...videoHelper
 }
