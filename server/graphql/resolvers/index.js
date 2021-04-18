@@ -1,10 +1,12 @@
 const userResolvers = require("./user");
 const videoResolvers = require("./video");
 
+const { getCommentCount, getLikeCount } = require("../utils/getVideoUtils");
+
 module.exports = {
     Video:{
-        likeCount: (parent) => parent.likecount,
-        commentCount: (parent) => parent.commentcount,
+        likeCount: getLikeCount,
+        commentCount: getCommentCount,
     },
     Query: {
         ...userResolvers.Query,
