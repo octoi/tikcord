@@ -1,15 +1,15 @@
 const checkAuth = require("../utils/checkAuth");
-const { createVideo, getAllVideos, getUserVideos } = require("../../postgres/helper");
+const { createVideo, getAllVideos, getUserVideos, deleteVideo: deleteUserVideo } = require("../../postgres/helper");
 
 const Mutation = {
 
     createVideo: async (_, videoData, context) => {
-        const userData = checkAuth(context);
+        const user = checkAuth(context);
 
         videoData = {
             ...videoData,
-            creator: JSON.stringify(userData),
-            email: userData.email,
+            creator: JSON.stringify(user),
+            email: user.email,
             createdAt: Date.now(),
             likeCount: 0,
             commentCount: 0,
@@ -18,8 +18,17 @@ const Mutation = {
         const data = await createVideo(videoData);
         return {
             ...data,
-            creator: userData
+            creator: user
         }
+
+    },
+
+    deleteVideo: async (_, { id }, context) => {
+        const user = checkAuth(context);
+
+        await deleteUserVideo(id, user);
+        
+        return "deleted";
 
     }
 

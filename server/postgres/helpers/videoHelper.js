@@ -7,23 +7,27 @@ module.exports = {
 
     getAllVideos: () => {
         return new Promise((resolve, reject) => {
+
             pool.query(`SELECT * FROM tikvideo`).then(videos => {
                 resolve(videos);
             }).catch(err => {
                 console.log(err.message);
                 reject()
             })
+
         });
     },
 
     getUserVideos: (email) => {
         return new Promise((resolve, reject) => {
+
             pool.query(`SELECT * FROM ${videoTable} WHERE email = $1`, [email]).then(data => {
                 resolve(data);
             }).catch(err => {
                 console.log(err.message);
                 reject();
             })
+
         });
     },
 
@@ -41,6 +45,7 @@ module.exports = {
                 console.log(err.message)
                 reject();
             })
+
         });
     },
 
@@ -49,23 +54,53 @@ module.exports = {
 
     getVideoLikes: (id) => {
         return new Promise((resolve, reject) => {
+
             pool.query(`SELECT * FROM ${likeTable} WHERE video = $1`, [id]).then(data => {
                 resolve(data)
             }).catch(err => {
                 console.log(err.message)
                 reject()
             })
+
         });
     },
 
     getVideoComments: (id) => {
         return new Promise((resolve, reject) => {
+
             pool.query(`SELECT * FROM ${commentTable} WHERE video = $1`, [id]).then(data => {
                 resolve(data);
             }).catch(err => {
                 console.log(err.message);
                 reject();
             })
+            
+
         });
     },
+
+    // delete video
+
+    deleteVideo: (id, user) => {
+        return new Promise((resolve, reject) => {
+            pool.query(`SELECT * FROM ${videoTable} WHERE id = $1`, [id]).then(({ rows: video }) => {
+
+                if(video[0].email == user.email){
+                    pool.query(`DELETE FROM ${videoTable} WHERE id = $1`, [id]).then(()=>{
+                        resolve();
+                    }).catch(err => {
+                        console.log(err.message);
+                        reject();
+                    })
+                }else{
+                    reject()
+                }
+
+            }).catch(err => {
+                console.log(err.message);
+                reject();
+            });
+
+        });
+    }
 }
