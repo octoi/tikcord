@@ -9,7 +9,7 @@ const Mutation = {
         videoData = {
             ...videoData,
             creator: JSON.stringify(userData),
-            user: userData.email,
+            email: userData.email,
             createdAt: Date.now(),
             likeCount: 0,
             commentCount: 0,

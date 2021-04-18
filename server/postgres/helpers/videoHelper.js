@@ -18,7 +18,7 @@ module.exports = {
 
     getUserVideos: (email) => {
         return new Promise((resolve, reject) => {
-            pool.query(`SELECT * FROM ${videoTable} WHERE user = $1`, [email]).then(data => {
+            pool.query(`SELECT * FROM ${videoTable} WHERE email = $1`, [email]).then(data => {
                 resolve(data.rows);
             }).catch(err => {
                 console.log(err.message);
@@ -31,9 +31,9 @@ module.exports = {
 
     createVideo: (videoData) => {
         return new Promise((resolve, reject) => {
-            const { creator, content, description, createdAt, likeCount, commentCount, user } = videoData;
+            const { creator, content, description, createdAt, likeCount, commentCount, email } = videoData;
 
-            pool.query(`INSERT INTO ${videoTable} (creator, content, description, createdAt, likeCount, commentCount, user) VALUES ($1, $2, $3, $4, $5, $6, $7)`, [creator, content, description, createdAt, likeCount, commentCount, user]).then(() => {
+            pool.query(`INSERT INTO ${videoTable} (creator, content, description, createdAt, likeCount, commentCount, email) VALUES ($1, $2, $3, $4, $5, $6, $7)`, [creator, content, description, createdAt, likeCount, commentCount, email]).then(() => {
                 pool.query(`SELECT * FROM ${videoTable} WHERE createdAt = $1`, [createdAt]).then(({ rows }) => {
                     resolve({ ...videoData, id: rows[0].id });
                 })
