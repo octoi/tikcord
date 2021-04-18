@@ -1,6 +1,5 @@
 const checkAuth = require("../utils/checkAuth");
 const { createVideo, getAllVideos } = require("../../postgres/helper");
-const videoHelper = require("../../postgres/helpers/videoHelper");
 
 const Mutation = {
 
