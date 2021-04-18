@@ -35,6 +35,10 @@ const Query = {
         });
 
         return videos;
+    },
+
+    getUserVideos: async (_, { user }) => {
+
     }
 
 }

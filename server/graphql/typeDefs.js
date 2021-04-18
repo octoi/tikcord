@@ -39,7 +39,7 @@ const typeDefs = gql`
     
     type Query{
         getVideos: [Video!],
-        getUserVideo(user: ID!): Creator!,
+        getUserVideo(user: String!): Creator!,
     },
 
 
