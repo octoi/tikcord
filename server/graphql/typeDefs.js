@@ -14,7 +14,7 @@ const typeDefs = gql`
     type Video{
         id: ID!,
         creator: User!,
-        userEmail: String!,
+        user: String!,
         content: String!,
         description: String!,
         createdAt: String!,
