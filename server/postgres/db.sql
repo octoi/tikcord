@@ -12,6 +12,7 @@ CREATE TABLE tikuser(
 CREATE TABLE tikvideo(
     id SERIAL PRIMARY KEY,
     creator: TEXT,
+    user TEXT
     content: TEXT,
     description: TEXT,
     createdAt: TEXT,
