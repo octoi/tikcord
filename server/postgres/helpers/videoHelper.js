@@ -19,7 +19,7 @@ module.exports = {
     getUserVideos: (email) => {
         return new Promise((resolve, reject) => {
             pool.query(`SELECT * FROM ${videoTable} WHERE email = $1`, [email]).then(data => {
-                resolve(data.rows);
+                resolve(data);
             }).catch(err => {
                 console.log(err.message);
                 reject();

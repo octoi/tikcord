@@ -39,7 +39,7 @@ const Query = {
     },
 
     getUserVideo: async (_, { user }) => {
-        const videosRaw = await getAllVideos(user);
+        const videosRaw = await getUserVideos(user);
         const videos = [];
 
         videosRaw.rows.forEach(video => {
