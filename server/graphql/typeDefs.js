@@ -44,7 +44,7 @@ const typeDefs = gql`
         updateUser(name: String!, bio: String!, profile: String!): User!,
 
         createVideo(content: String!, description: String!): Video!,
-        deleteVideo: String!,
+        deleteVideo(id: ID!): String!,
 
         likeVideo(video: ID!): Like!,
         commentVideo(video: ID!, content: String!): Comment!,
