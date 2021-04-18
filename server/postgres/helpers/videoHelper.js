@@ -2,6 +2,17 @@ const pool = require("../setup");
 const { videoTable } = require("../constants");
 
 module.exports = {
+    getAllVideos: () => {
+        return new Promise((resolve, reject) => {
+            pool.query(`SELECT * FROM tikvideo`).then(videos => {
+                resolve(videos);
+            }).catch(err => {
+                console.log(err.message);
+                reject()
+            })
+        });
+    },
+
     createVideo: (videoData) => {
         return new Promise((resolve, reject) => {
             const { creator, content, description, createdAt, likeCount, commentCount } = videoData;
@@ -15,5 +26,5 @@ module.exports = {
                 reject();
             })
         });
-    }
+    },
 }

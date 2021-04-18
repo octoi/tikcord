@@ -24,6 +24,12 @@ const Mutation = {
 
 }
 
-const Query = {}
+const Query = {
+
+    getVideos: async () => {
+        
+    }
+
+}
 
 module.exports = { Mutation, Query }
