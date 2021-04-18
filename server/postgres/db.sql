@@ -5,29 +5,29 @@ CREATE TABLE tikuser(
     name TEXT,
     email TEXT,
     password: TEXT,
-    bio: TEXT,
-    profile: TEXT,
+    bio TEXT,
+    profile TEXT,
 );
 
 CREATE TABLE tikvideo(
     id SERIAL PRIMARY KEY,
-    creator: TEXT,
-    user TEXT
-    content: TEXT,
+    creator TEXT,
+    user TEXT,
+    content TEXT,
     description: TEXT,
-    createdAt: TEXT,
+    createdAt TEXT,
 )
 
 CREATE TABLE tiklike(
     id SERIAL PRIMARY KEY,
-    creator: TEXT,
+    creator TEXT,
     video TEXT
 )
 
 CREATE TABLE tikcomment(
     id SERIAL PRIMARY KEY,
-    createdAt: TEXT,
-    creator: TEXT,
-    content: TEXT,
+    createdAt TEXT,
+    creator TEXT,
+    content TEXT,
     video TEXT
 )
