@@ -27,7 +27,8 @@ const Mutation = {
 const Query = {
 
     getVideos: async () => {
-
+        const videos = await getAllVideos();
+        return videos.rows;
     }
 
 }
