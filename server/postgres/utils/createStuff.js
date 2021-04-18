@@ -15,7 +15,9 @@ module.exports = (pool) => {
             creator BIGINT REFERENCES tikuser(id),
             content TEXT,
             description TEXT,
-            createdAt TEXT
+            createdAt TEXT,
+            likeCount INT,
+            commentCount INT
         )
     `);
     pool.query(`
