@@ -1,5 +1,5 @@
 const pool = require("../setup");
-const { videoTable } = require("../constants");
+const { videoTable, likeTable, commentTable } = require("../constants");
 
 module.exports = {
     getAllVideos: () => {
@@ -27,4 +27,28 @@ module.exports = {
             })
         });
     },
+
+    // get video utils 
+
+    getVideoLikes: (id) => {
+        return new Promise((resolve, reject) => {
+            pool.query(`SELECT * FROM ${likeTable} WHERE video = $1`, [id]).then(data => {
+                resolve(data)
+            }).catch(err => {
+                console.log(err.message)
+                reject()
+            })
+        });
+    },
+
+    getVideoComments: (id) => {
+        return new Promise((resolve, reject) => {
+            pool.query(`SELECT * FROM ${commentTable} WHERE video = $1`, [id]).then(data => {
+                resolve(data);
+            }).catch(err => {
+                console.log(err.message);
+                reject();
+            })
+        });
+    }
 }
