@@ -14,6 +14,7 @@ const typeDefs = gql`
     type Video{
         id: ID!,
         creator: User!,
+        userEmail: String!,
         content: String!,
         description: String!,
         createdAt: String!,
@@ -30,16 +31,10 @@ const typeDefs = gql`
         bio: String!,
         token: String!
     },
-    type Creator{
-        id: ID!,
-        user: User!,
-        videos: [Video!]
-    }
-
     
     type Query{
         getVideos: [Video!],
-        getUserVideo(user: String!): Creator!,
+        getUserVideo(user: String!): [Video!],
     },
 
 

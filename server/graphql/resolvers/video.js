@@ -1,5 +1,5 @@
 const checkAuth = require("../utils/checkAuth");
-const { createVideo, getAllVideos } = require("../../postgres/helper");
+const { createVideo, getAllVideos, getUserVideos } = require("../../postgres/helper");
 
 const Mutation = {
 
@@ -9,6 +9,7 @@ const Mutation = {
         videoData = {
             ...videoData,
             creator: JSON.stringify(user),
+            userEmail: user.email,
             createdAt: Date.now(),
             likeCount: 0,
             commentCount: 0,
@@ -37,8 +38,15 @@ const Query = {
         return videos;
     },
 
-    getUserVideos: async (_, { user }) => {
+    getUserVideo: async (_, { user }) => {
+        const videosRaw = await getAllVideos(user);
+        const videos = [];
 
+        videosRaw.rows.forEach(video => {
+            videos.push({ ...video, creator: JSON.parse(video.creator) });
+        });
+
+        return videos;
     }
 
 }
