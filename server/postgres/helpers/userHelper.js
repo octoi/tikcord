@@ -12,7 +12,7 @@ module.exports = {
                         resolve({ name, email, password, bio, profile });
                     }).catch(err => {
                         console.log(err.message)
-                        process.exit(0)
+                        reject(); 
                     })
 
                 }else{
