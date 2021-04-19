@@ -41,18 +41,29 @@ const Mutation = {
     updateUser: async (_, { name, bio, profile, email, password }, context) => {
         const user = await checkAuth(context);
 
-        password = await bcrypt.hash(password, 10);
-
         if(user.email != email) throw new AuthenticationError("Authentication failed");
-
+        
+        password = await bcrypt.hash(password, 10);
+        
         const res = updateUserData(name, password, email, bio, profile);
-
         return res;
 
     }
 
 }
 
-const Query = {}
+const Query = {
+
+    getUser: async (_, { email }) => {
+        const user = await checkUserExists(email);
+        const userData = user.rows[0];
+
+        if(!userData) return undefined;
+
+        return userData;
+
+    }
+
+}
 
 module.exports = { Mutation, Query }
