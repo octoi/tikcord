@@ -4,12 +4,14 @@ const typeDefs = gql`
     type Like{
         id: ID!
         creator: User!,
+        video: ID!,
     },
     type Comment{
         id: ID!,
         createdAt: String!,
         creator: String!,
-        content: String!
+        content: String!,
+        video: ID!,
     },
     type Video{
         id: ID!,
