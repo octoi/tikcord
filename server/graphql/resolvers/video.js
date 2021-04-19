@@ -47,8 +47,8 @@ const Query = {
         return videos;
     },
 
-    getUserVideo: async (_, { user }) => {
-        const videosRaw = await getUserVideos(user);
+    getUserVideo: async (_, { email }) => {
+        const videosRaw = await getUserVideos(email);
         const videos = [];
 
         videosRaw.rows.forEach(video => {
