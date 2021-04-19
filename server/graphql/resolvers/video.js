@@ -30,6 +30,18 @@ const Mutation = {
         
         return "deleted";
 
+    },
+
+    likeVideo: async (_, { video }, context) => {
+        const user = checkAuth(context);
+
+        const like = {
+            creator: user,
+            video
+        }
+
+        
+
     }
 
 }

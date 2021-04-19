@@ -50,7 +50,7 @@ module.exports = {
     },
 
 
-    // get video utils 
+    // video utils 
 
     getVideoLikes: (id) => {
         return new Promise((resolve, reject) => {
@@ -76,6 +76,12 @@ module.exports = {
             })
             
 
+        });
+    },
+
+    likeAVideo: ({ creator, video }) => {
+        return new Promise((resolve, reject) => {
+            // like video
         });
     },
 
