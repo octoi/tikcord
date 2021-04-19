@@ -1,8 +1,9 @@
 const { AuthenticationError } = require("apollo-server-errors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { registerUser } = require("../../postgres/helper");
+const { registerUser, updateUserData } = require("../../postgres/helper");
 const { checkUserExists } = require("../../postgres/utils/check");
+const checkAuth = require("../utils/checkAuth");
 
 const generateToken = (user) => {
     return jwt.sign({
@@ -35,6 +36,19 @@ const Mutation = {
 
         const token = generateToken(userData);
         return { ...userData, token }
+    },
+
+    updateUser: async (_, { name, bio, profile, email, password }, context) => {
+        const user = await checkAuth(context);
+
+        password = await bcrypt.hash(password, 10);
+
+        if(user.email != email) throw new AuthenticationError("Authentication failed");
+
+        const res = updateUserData(name, password, email, bio, profile);
+
+        return res;
+
     }
 
 }

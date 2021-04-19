@@ -20,5 +20,17 @@ module.exports = {
                 }
             })
         });
+    },
+
+    updateUserData: (name, password, email, bio, profile) => {
+        return new Promise((resolve, reject) =>  {
+            pool.query(`UPDATE ${userTable} SET name = $1, password = $2, bio = $3, profile = $4 WHERE email = $5`, [name, password, bio, profile, email]).then(data => {
+                console.log(data)
+                resolve({ name, email, password, bio, profile })
+            }).catch(err => {
+                console.log(err.message)
+                reject(); 
+            });
+        });
     }
 }
