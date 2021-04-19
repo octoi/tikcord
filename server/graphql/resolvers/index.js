@@ -7,6 +7,7 @@ module.exports = {
     Video:{
         likeCount: getLikeCount,
         commentCount: getCommentCount,
+        createdAt: (parent) => parent.createdat,
     },
     Query: {
         ...userResolvers.Query,
