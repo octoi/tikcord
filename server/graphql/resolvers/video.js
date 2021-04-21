@@ -43,6 +43,20 @@ const Mutation = {
         await likeAVideo(like);
         return like;
 
+    },
+
+    commentVideo: async (_, { video, content }, context) => {
+        const user = checkAuth(context);
+
+        const comment = {
+            createdAt: Date.now(),
+            creator: user,
+            content: content,
+            video: video,
+        }
+
+        
+
     }
 
 }
