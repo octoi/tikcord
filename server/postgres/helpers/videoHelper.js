@@ -84,13 +84,13 @@ module.exports = {
 
             pool.query(`SELECT * FROM ${likeTable} WHERE video = $1 AND creator = $2`, [video, creator]).then(({ rows: data }) => {
                 if(data.length > 0){
-                    pool.query(`INSERT INTO ${likeTable} (creator, video) VALUES ($1 $2)`, [creator, video]).then(({ rows: data }) => {
-                        resolve(data);
-                    })                    
-                }else{
                     pool.query(`DELETE FROM ${likeTable} WHERE video = $1 AND creator = $2`, [video, creator]).then(({ rows: data }) => {
                         resolve(data)
                     });
+                }else{
+                    pool.query(`INSERT INTO ${likeTable} (creator, video) VALUES ($1, $2)`, [creator, video]).then(({ rows: data }) => {
+                        resolve(data);
+                    });                    
                 }
             }).catch(err => {
                 console.log(err.message);

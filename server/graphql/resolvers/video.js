@@ -1,5 +1,5 @@
 const checkAuth = require("../utils/checkAuth");
-const { createVideo, getAllVideos, getUserVideos, deleteVideo: deleteUserVideo } = require("../../postgres/helper");
+const { createVideo, getAllVideos, getUserVideos, deleteVideo: deleteUserVideo, likeAVideo } = require("../../postgres/helper");
 
 const Mutation = {
 
@@ -40,7 +40,8 @@ const Mutation = {
             video
         }
 
-        
+        await likeAVideo(like);
+        return like;
 
     }
 
