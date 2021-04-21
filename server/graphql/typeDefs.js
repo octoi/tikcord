@@ -38,8 +38,8 @@ const typeDefs = gql`
         getVideos: [Video!],
         getUserVideo(email: String!): [Video!],
         getUser(email: String!): User!,
-        getVideoComments(video: String!): [Comment!],
-        getVideoLikers(video: String!): [Like!],
+        getVideoComments(video: ID!): [Comment!],
+        getVideoLikers(video: ID!): [Like!],
     },
 
 
