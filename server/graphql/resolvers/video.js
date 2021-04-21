@@ -1,5 +1,5 @@
 const checkAuth = require("../utils/checkAuth");
-const { createVideo, getAllVideos, getUserVideos, deleteVideo: deleteUserVideo, likeAVideo, createComment, removeComment } = require("../../postgres/helper");
+const { createVideo, getAllVideos, getUserVideos, deleteVideo: deleteUserVideo, likeAVideo, createComment, removeComment, getVideoComments : getVideoCommentsFromDb, getVideoLikes } = require("../../postgres/helper");
 
 const Mutation = {
 
@@ -93,7 +93,28 @@ const Query = {
         });
 
         return videos;
-    }
+    },
+
+    getVideoComments: async (_, { video }) => {
+        const commentsFromDb = await getVideoCommentsFromDb(video);
+        
+        if(!commentsFromDb.rows) return;
+
+        const comments = commentsFromDb.rows
+
+        comments.forEach(comment => {
+            comment.createdAt = comment.createdat;
+            comment.creator = JSON.parse(comment.creator)
+        });
+
+        return comments;
+        
+    },
+
+    getVideoLikers: async (_, { video }) => {
+        const likes = await getVideoLikes(video);
+        return likes?.rows;
+    },
 
 }
 
