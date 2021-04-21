@@ -100,16 +100,16 @@ module.exports = {
         });
     },
 
-    createComment: (comment) => {
+    createComment: ({ content, creator, video, createdAt }) => {
         return new Promise((resolve, reject) => {
 
-            pool.query(`INSERT INTO ${commentTable} (content, creator, video, createdAt) VALUES ($1, $2, $3, $4) `, [comment.content, comment,creator, comment.video, comment.createdAt]).then(({ rows: data }) => {
-               resolve(data) 
+            pool.query(`INSERT INTO ${commentTable} (content, creator, video, createdAt) VALUES ($1, $2, $3, $4) `, [content, creator, video, createdAt]).then(({ rows: data }) => {
+               resolve(data)
             }).catch(err => {
                 console.log(err.message);
                 reject();
             });
-            
+
         });
     },
 
