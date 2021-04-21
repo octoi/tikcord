@@ -74,7 +74,7 @@ module.exports = {
                 console.log(err.message);
                 reject();
             })
-            
+
 
         });
     },
@@ -83,14 +83,14 @@ module.exports = {
         return new Promise((resolve, reject) => {
 
             pool.query(`SELECT * FROM ${likeTable} WHERE video = $1 AND creator = $2`, [video, creator]).then(({ rows: data }) => {
-                if(data.length > 0){
+                if (data.length > 0) {
                     pool.query(`DELETE FROM ${likeTable} WHERE video = $1 AND creator = $2`, [video, creator]).then(({ rows: data }) => {
                         resolve(data)
                     });
-                }else{
+                } else {
                     pool.query(`INSERT INTO ${likeTable} (creator, video) VALUES ($1, $2)`, [creator, video]).then(({ rows: data }) => {
                         resolve(data);
-                    });                    
+                    });
                 }
             }).catch(err => {
                 console.log(err.message);
@@ -104,7 +104,32 @@ module.exports = {
         return new Promise((resolve, reject) => {
 
             pool.query(`INSERT INTO ${commentTable} (content, creator, video, createdAt) VALUES ($1, $2, $3, $4) `, [content, creator, video, createdAt]).then(({ rows: data }) => {
-               resolve(data)
+                resolve(data)
+            }).catch(err => {
+                console.log(err.message);
+                reject();
+            });
+
+        });
+    },
+
+    removeComment: (user, commentId) => {
+        return new Promise((resolve, reject) => {
+
+            pool.query(`SELECT * FROM ${commentTable} WHERE id = $1`, [commentId]).then(({ rows: comment }) => {
+
+                if (comment.creator.email != user.email) {
+                    reject();
+                    return;
+                }
+
+                pool.query(`DELETE FROM ${commentTable} WHERE id = $1`, [commentId]).then(data => {
+                    resolve(data);
+                }).catch(err => {
+                    console.log(err.message);
+                    reject();
+                });
+
             }).catch(err => {
                 console.log(err.message);
                 reject();
@@ -119,14 +144,14 @@ module.exports = {
         return new Promise((resolve, reject) => {
             pool.query(`SELECT * FROM ${videoTable} WHERE id = $1`, [id]).then(({ rows: video }) => {
 
-                if(video[0].email == user.email){
-                    pool.query(`DELETE FROM ${videoTable} WHERE id = $1`, [id]).then(()=>{
+                if (video[0].email == user.email) {
+                    pool.query(`DELETE FROM ${videoTable} WHERE id = $1`, [id]).then(() => {
                         resolve();
                     }).catch(err => {
                         console.log(err.message);
                         reject();
                     })
-                }else{
+                } else {
                     reject()
                 }
 
