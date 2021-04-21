@@ -9,7 +9,7 @@ const typeDefs = gql`
     type Comment{
         id: ID!,
         createdAt: String!,
-        creator: String!,
+        creator: User!,
         content: String!,
         video: ID!,
     },
