@@ -1,5 +1,5 @@
 const checkAuth = require("../utils/checkAuth");
-const { createVideo, getAllVideos, getUserVideos, deleteVideo: deleteUserVideo, likeAVideo, createComment } = require("../../postgres/helper");
+const { createVideo, getAllVideos, getUserVideos, deleteVideo: deleteUserVideo, likeAVideo, createComment, removeComment } = require("../../postgres/helper");
 
 const Mutation = {
 
@@ -57,6 +57,16 @@ const Mutation = {
         await createComment(comment);
         
         return comment;
+    },
+
+    deleteComment: async (_, { comment }, context) => {
+        const user = checkAuth(context);
+
+        const deleteComment = await removeComment(user, comment);
+
+        if(deleteComment){
+            return "deleted";
+        }
     }
 
 }

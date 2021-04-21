@@ -117,6 +117,8 @@ module.exports = {
         return new Promise((resolve, reject) => {
 
             pool.query(`SELECT * FROM ${commentTable} WHERE id = $1`, [commentId]).then(({ rows: comment }) => {
+                comment = comment[0];
+                comment.creator = JSON.parse(comment.creator);
 
                 if (comment.creator.email != user.email) {
                     reject();
