@@ -112,8 +112,17 @@ const Query = {
     },
 
     getVideoLikers: async (_, { video }) => {
-        const likes = await getVideoLikes(video);
-        return likes?.rows;
+        const likesFromDb = await getVideoLikes(video);
+
+        if(!likesFromDb.rows) return;
+
+        const likes = likesFromDb.rows;
+
+        likes.forEach(like => {
+            like.creator = JSON.parse(like.creator);
+        });
+
+        return likes;
     },
 
 }
