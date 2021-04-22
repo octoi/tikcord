@@ -1,5 +1,6 @@
 const checkAuth = require("../utils/checkAuth");
 const { createVideo, getAllVideos, getUserVideos, deleteVideo: deleteUserVideo, likeAVideo, createComment, removeComment, getVideoComments : getVideoCommentsFromDb, getVideoLikes } = require("../../postgres/helper");
+const { getVideosFromCache } = require("../../redis/helper");
 
 const Mutation = {
 
@@ -74,8 +75,16 @@ const Mutation = {
 const Query = {
 
     getVideos: async () => {
-        const videosRaw = await getAllVideos();
         const videos = [];
+
+        // trying to get cached videos
+        videos = getVideosFromCache();
+
+        if(videos.length > 0){
+            return videos;
+        }
+
+        const videosRaw = await getAllVideos();
 
         videosRaw.rows.forEach(video => {
             videos.push({ ...video, creator: JSON.parse(video.creator) });
