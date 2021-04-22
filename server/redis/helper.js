@@ -13,7 +13,6 @@ module.exports = {
 
                     reply.forEach(video => {
                         video = JSON.parse(video);
-                        video.creator = JSON.parse(video.creator);
                         videos.push(video);
                     });
 
@@ -25,7 +24,6 @@ module.exports = {
 
     addVideoToCache: (data) => {
         return new Promise((resolve, reject) => {
-            data.creator = JSON.stringify(data.creator); // creator is an object it can't be stored in plain
             client.lpush("videos", JSON.stringify(data), (err, reply) => {
                 if(err){
                     console.log(err.message);
