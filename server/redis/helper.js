@@ -9,7 +9,15 @@ module.exports = {
                     console.log(err.message);
                     reject();
                 }else{
-                    resolve(reply)
+                    const videos = [];
+
+                    reply.forEach(video => {
+                        video = JSON.parse(video);
+                        video.creator = JSON.parse(video.creator);
+                        videos.push(video);
+                    });
+
+                    resolve(videos);
                 }
             });
         });

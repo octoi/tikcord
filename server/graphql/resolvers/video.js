@@ -79,7 +79,7 @@ const Query = {
     getVideos: async () => {
         let videos = [];
 
-        videos = getVideosFromCache();
+        videos = await getVideosFromCache();
 
         if(videos.length > 0){
             return videos;
