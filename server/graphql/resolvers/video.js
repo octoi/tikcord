@@ -80,7 +80,7 @@ const Query = {
         let videos = [];
 
         videos = await getVideosFromCache();
-
+        
         if(videos.length > 0){
             return videos;
         }
