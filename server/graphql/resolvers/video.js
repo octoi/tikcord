@@ -1,6 +1,6 @@
 const checkAuth = require("../utils/checkAuth");
 const { createVideo, getAllVideos, getUserVideos, deleteVideo: deleteUserVideo, likeAVideo, createComment, removeComment, getVideoComments : getVideoCommentsFromDb, getVideoLikes } = require("../../postgres/helper");
-const { getVideosFromCache } = require("../../redis/helper");
+const { getVideosFromCache, addVideoToCache } = require("../../redis/helper");
 
 const Mutation = {
 
@@ -17,6 +17,8 @@ const Mutation = {
         }
 
         const data = await createVideo(videoData);
+        await addVideoToCache({ ...data, creator: user }); // adding data to cache
+        
         return {
             ...data,
             creator: user
