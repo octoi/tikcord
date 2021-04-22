@@ -80,17 +80,19 @@ const Query = {
         let videos = [];
 
         videos = await getVideosFromCache();
-        
+
         if(videos.length > 0){
             return videos;
         }
 
         const videosRaw = await getAllVideos();
 
-        videosRaw.rows.forEach(video => {
+        videosRaw.rows.forEach(async video => {
             videos.push({ ...video, creator: JSON.parse(video.creator) });
+            await addVideoToCache({ ...video, creator: JSON.parse(video.creator) });
         });
 
+        
         return videos;
     },
 
