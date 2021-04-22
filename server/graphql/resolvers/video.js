@@ -75,7 +75,7 @@ const Mutation = {
 const Query = {
 
     getVideos: async () => {
-        const videos = [];
+        let videos = [];
 
         // trying to get cached videos
         videos = getVideosFromCache();
