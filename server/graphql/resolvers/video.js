@@ -77,7 +77,6 @@ const Query = {
     getVideos: async () => {
         let videos = [];
 
-        // trying to get cached videos
         videos = getVideosFromCache();
 
         if(videos.length > 0){
