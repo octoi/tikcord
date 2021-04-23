@@ -12,6 +12,10 @@ export default function Login() {
         router.push('/app');
     }
 
+    const submitForm = (event) => {
+        event.preventDefault()
+    }
+
     return (
         <section>
             <Head>
@@ -21,8 +25,8 @@ export default function Login() {
 
             <div className={styles.container}>
                 <Text fontSize="4xl" style={{ fontWeight: "600" }}>Login Tikcord</Text>
-                <form style={{ marginTop: "50px" }}>
-                    <Input placeholder="Email address" />
+                <form style={{ marginTop: "50px" }} onSubmit={submitForm}>
+                    <Input placeholder="Email address" type="email" />
                     <Input className={styles.mt} placeholder="Password" type="password" />
                     <div className={styles.utils}>
                         <Button colorScheme="teal" variant="outline">Login</Button>
