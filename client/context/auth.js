@@ -1,4 +1,5 @@
 import jwtDecode from 'jwt-decode';
+import cookie from 'js-cookie';
 
 export function decodeToken(token) {
     const decodedToken = jwtDecode(token);
@@ -11,10 +12,10 @@ export function decodeToken(token) {
 }
 
 export function getUser() {
-    if (sessionStorage.getItem("token")) {
-        const decodedData = decodeToken(sessionStorage.getItem("token"));
+    if (cookie.get("token")) {
+        const decodedData = decodeToken(cookie.get("token"));
 
-        if (!decodeToken) sessionStorage.removeItem(decodeToken);
+        if (!decodeToken) cookie.remove("token");
 
         return decodeToken;
     }
