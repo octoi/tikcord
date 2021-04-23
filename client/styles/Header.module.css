@@ -1,5 +1,7 @@
 .container{
     margin: 30px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .container h2{
