@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { AppContext } from '../context/AppContext';
 
 const theme = extendTheme({
     config: {
@@ -11,7 +12,9 @@ const theme = extendTheme({
 function MyApp({ Component, pageProps }) {
     return (
         <ChakraProvider theme={theme}>
-            <Component {...pageProps} />
+            <AppContext>
+                <Component {...pageProps} />
+            </AppContext>
         </ChakraProvider>
     )
 }
