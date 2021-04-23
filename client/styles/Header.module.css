@@ -1,0 +1,8 @@
+.container{
+    margin: 30px;
+}
+
+.container h2{
+    font-size: 25px;
+    font-weight: 600;
+}
