@@ -1,3 +1,4 @@
-# CHATCORD 💩
+# TIKCORD
+Unleash your creativity
 
-Redis Hackathon Project
+> Redis Hackathon Project
