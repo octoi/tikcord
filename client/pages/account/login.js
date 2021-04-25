@@ -10,9 +10,7 @@ export default function Login() {
     const [loginUser, setLoginUser] = useState({ email: '', password: '' });
     const router = useRouter();
 
-    if (user.name) {
-        router.push('/app');
-    }
+    if (user.name) router.push('/app');
 
     const submitForm = (event) => {
         event.preventDefault();
