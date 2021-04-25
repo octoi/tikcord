@@ -23,8 +23,11 @@ export default function Login() {
                 visibility: true,
                 title: 'Password must be at least 6 characters !',
             });
+
+            return;
         }
 
+        setFeedbackAlert({ visibility: false, title: '' });
         setLoginUser({ ...loginUser, password: cryptoJs.MD5(loginUser.password) }); // hashing password
 
     }
