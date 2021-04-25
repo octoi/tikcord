@@ -12,3 +12,17 @@
     align-items: center;
     margin-top: 20px;
 }
+
+@media only screen and (max-width: 784px){
+    .utils{
+        flex-direction: column;
+    }
+
+    .utils a{
+        margin-top: 10px;
+    }
+
+    .container{
+        margin: 100px 10%;
+    }
+}
