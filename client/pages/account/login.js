@@ -31,14 +31,12 @@ export default function Login() {
                     <Input
                         placeholder="Email address"
                         type="email"
-                        value={loginUser.email}
                         onChange={e => setLoginUser({ ...loginUser, email: e.target.value })}
                     />
                     <Input
                         className={styles.mt}
                         placeholder="Password"
                         type="password"
-                        value={loginUser.password}
                         onChange={e => setLoginUser({ ...loginUser, password: cryptoJs.MD5(e.target.value) })}
                     />
 
