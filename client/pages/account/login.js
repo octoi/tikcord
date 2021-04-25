@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import useAuthContext from '../../context/contextHook';
 import styles from '../../styles/Login.module.css';
+import cryptoJs from 'crypto-js';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Text, Input, Button, Link } from '@chakra-ui/react';
@@ -38,7 +39,7 @@ export default function Login() {
                         placeholder="Password"
                         type="password"
                         value={loginUser.password}
-                        onChange={e => setLoginUser({ ...loginUser, password: e.target.value })}
+                        onChange={e => setLoginUser({ ...loginUser, password: cryptoJs.MD5(e.target.value) })}
                     />
 
                     <div className={styles.utils}>
