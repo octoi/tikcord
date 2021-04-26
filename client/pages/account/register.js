@@ -12,6 +12,8 @@ export default function Register() {
     const [feedbackAlert, setFeedbackAlert] = useState({ visibility: false, title: '' });
     const router = useRouter();
 
+    if (user.name) router.push("/app");
+
     const submitForm = (event) => {
         event.preventDefault();
 
