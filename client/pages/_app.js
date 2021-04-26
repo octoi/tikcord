@@ -12,7 +12,7 @@ const theme = extendTheme({
 });
 
 const client = new ApolloClient({
-    uri: process.env.SERVER_URL || 'http://localhost:5000',
+    uri: process.env.SERVER_URL || 'http://localhost:8080',
     cache: new InMemoryCache(),
 });
 
