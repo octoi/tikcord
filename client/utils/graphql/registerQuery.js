@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export default registerQuery = gql`
+const registerQuery = gql`
     mutation register(
         $name: String!,
         $email: String!,
@@ -22,3 +22,5 @@ export default registerQuery = gql`
         }
     }
 `
+
+export default registerQuery;
