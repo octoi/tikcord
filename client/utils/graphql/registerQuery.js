@@ -13,7 +13,6 @@ const registerQuery = gql`
             bio: "I'm a cool creator",
             profile: "null" 
         ){
-            id
             name
             email
             token
