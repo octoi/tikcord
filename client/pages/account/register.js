@@ -1,10 +1,13 @@
 import Head from 'next/head';
 import useAuthContext from '../../context/contextHook';
 import styles from '../../styles/Login.module.css';
+import cryptoJs from 'crypto-js';
+import REGISTER_QUERY from '../../utils/graphql/registerQuery';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Text, Input, Button, Link } from '@chakra-ui/react';
 import { Alert, AlertIcon, AlertTitle, CloseButton } from '@chakra-ui/react';
+import { useMutation } from '@apollo/client';
 
 export default function Register() {
     const { user, setUser } = useAuthContext();
@@ -26,6 +29,12 @@ export default function Register() {
             setFeedbackAlert({ visibility: true, title: 'Password must be match !' })
             return;
         }
+
+
+        setFeedbackAlert({ visibility: false, title: '' });
+        setLoginUser({ ...loginUser, password: cryptoJs.MD5(loginUser.password) });
+
+        delete loginUser.repass;
 
     }
 
