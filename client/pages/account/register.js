@@ -22,6 +22,11 @@ export default function Register() {
             return;
         }
 
+        if (loginUser.password !== loginUser.repass) {
+            setFeedbackAlert({ visibility: true, title: 'Password must be match !' })
+            return;
+        }
+
     }
 
     return (
