@@ -2,14 +2,20 @@ import Head from 'next/head';
 import useAuthContext from '../../context/contextHook';
 import styles from '../../styles/Login.module.css';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { Text, Input, Button, Link } from '@chakra-ui/react';
+import { Alert, AlertIcon, AlertTitle, CloseButton } from '@chakra-ui/react';
 
 export default function Register() {
-
+    const { user, setUser } = useAuthContext();
     const [loginUser, setLoginUser] = useState({ name: '', email: '', password: '', repass: '' });
+    const [feedbackAlert, setFeedbackAlert] = useState({ visibility: false, title: '' });
+    const router = useRouter();
 
     const submitForm = (event) => {
         event.preventDefault();
+
+
     }
 
     return (
@@ -18,6 +24,20 @@ export default function Register() {
                 <title>Register</title>
                 <meta name="description" content="register to unleash your creativity" />
             </Head>
+
+            {/* feedback alert */}
+            {feedbackAlert.visibility && (
+                <Alert status="error">
+                    <AlertIcon />
+                    <AlertTitle mr={2}>{feedbackAlert.title}</AlertTitle>
+                    <CloseButton
+                        onClick={() => setFeedbackAlert({ ...feedbackAlert, visibility: false })}
+                        position="absolute"
+                        right="8px"
+                        top="8px"
+                    />
+                </Alert>
+            )}
 
             <div className={styles.container}>
                 <Text fontSize="4xl" style={{ fontWeight: "600" }}>Register Tikcord</Text>
