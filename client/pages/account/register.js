@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import useAuthContext from '../../context/contextHook';
 import styles from '../../styles/Login.module.css';
-import cryptoJs from 'crypto-js';
+import bcrypt from 'bcrypt';
 import REGISTER_QUERY from '../../utils/graphql/registerQuery';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -17,6 +17,18 @@ export default function Register() {
 
     if (user.name) router.push("/app");
 
+    const [RegisterUser, { loading }] = useMutation(REGISTER_QUERY, {
+        variables: { ...loginUser, password: loginUser.password },
+        update(_, { data }) {
+            console.log(data)
+        },
+        onError(err) {
+            setLoginUser({ ...loginUser, repass: loginUser.password }); // resetting the state
+            console.info(err.graphQLErrors[0]);
+        }
+    });
+
+
     const submitForm = (event) => {
         event.preventDefault();
 
@@ -30,11 +42,11 @@ export default function Register() {
             return;
         }
 
-
         setFeedbackAlert({ visibility: false, title: '' });
-        setLoginUser({ ...loginUser, password: cryptoJs.MD5(loginUser.password) });
-
         delete loginUser.repass;
+
+
+        RegisterUser();
 
     }
 
