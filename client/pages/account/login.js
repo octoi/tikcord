@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import useAuthContext from '../../context/contextHook';
 import styles from '../../styles/Login.module.css';
-import cryptoJs from 'crypto-js';
+import { md5 as hash } from 'pure-md5';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Text, Input, Button, Link } from '@chakra-ui/react';
@@ -28,7 +28,7 @@ export default function Login() {
         }
 
         setFeedbackAlert({ visibility: false, title: '' });
-        setLoginUser({ ...loginUser, password: cryptoJs.MD5(loginUser.password) }); // hashing password
+        setLoginUser({ ...loginUser, password: hash(loginUser.password) }); // hashing password
 
     }
 

@@ -4,6 +4,7 @@ import styles from '../../styles/Login.module.css';
 import REGISTER_QUERY from '../../utils/graphql/registerQuery';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { md5 as hash } from 'pure-md5';
 import { Text, Input, Button, Link } from '@chakra-ui/react';
 import { Alert, AlertIcon, AlertTitle, CloseButton } from '@chakra-ui/react';
 import { useMutation } from '@apollo/client';
