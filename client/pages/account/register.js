@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import useAuthContext from '../../context/contextHook';
 import styles from '../../styles/Login.module.css';
-import bcrypt from 'bcrypt';
 import REGISTER_QUERY from '../../utils/graphql/registerQuery';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
