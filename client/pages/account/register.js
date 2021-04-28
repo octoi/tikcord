@@ -24,7 +24,7 @@ export default function Register() {
         variables: { ...loginUser, password: hash(loginUser.password) },
         update(_, { data: { register } }) {
             cookie.set("token", register.token);
-            setUser(register);
+            setUser({ ...register, token: register.token });
         },
         onError() {
             setFeedbackAlert({ visibility: true, title: 'Looks like there is an user with same credentials !' });
