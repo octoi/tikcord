@@ -12,6 +12,7 @@
     "@chakra-ui/react": "^1.5.2",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@heroicons/react": "^1.0.1",
     "framer-motion": "^4",
     "graphql": "^15.5.0",
     "graphql-tag": "^2.11.0",
