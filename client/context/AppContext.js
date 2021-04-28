@@ -7,7 +7,7 @@ export function AppContext({ children }) {
     const [user, setUser] = useState({});
 
     const userFromSession = getUser();
-    if (userFromSession) setUser(userFromSession);
+    if (userFromSession && userFromSession.token != user.token) setUser(userFromSession);
 
     return (
         <UserStateContext.Provider value={{ user, setUser }}>
