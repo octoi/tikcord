@@ -23,7 +23,6 @@ export default function Register() {
             console.log(data)
         },
         onError() {
-            setLoginUser({ name: '', email: '', password: '', repass: '' }); // resetting the state
             setFeedbackAlert({ visibility: true, title: 'Looks like there is an user with same credentials !' });
         }
     });
