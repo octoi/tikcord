@@ -1,14 +1,13 @@
 import { useRouter } from 'next/router';
 import { Button } from '@chakra-ui/react';
-import styles from '../../../styles/App.module.css';
 
-export default function IconButton({ Icon, text, link, mt }) {
+export default function IconButton({ Icon, text, link, mt, solid }) {
     const router = useRouter();
 
     return (
         <Button
             colorScheme="twitter"
-            variant="ghost"
+            variant={solid ? "solid" : "ghost"}
             onClick={() => router.push(link)}
             style={{ display: "flex", alignItems: "center", marginTop: mt ? 20 : 0 }}
         >
