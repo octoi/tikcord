@@ -1,11 +1,14 @@
 import Head from 'next/head';
 import useAuthContext from '../../context/contextHook';
 import styles from '../../styles/Login.module.css';
+import cookie from 'js-cookie';
+import LOGIN_QUERY from '../../utils/graphql/loginQuery';
 import { md5 as hash } from 'pure-md5';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Text, Input, Button, Link } from '@chakra-ui/react';
 import { Alert, AlertIcon, AlertTitle, CloseButton } from '@chakra-ui/react';
+import { useMutation } from '@apollo/client';
 
 export default function Login() {
     const { user, setUser } = useAuthContext();
@@ -13,7 +16,16 @@ export default function Login() {
     const [feedbackAlert, setFeedbackAlert] = useState({ visibility: false, title: '' });
     const router = useRouter();
 
-    if (user.name) router.push('/app');
+    const [LoginUser] = useMutation(LOGIN_QUERY, {
+        variables: { ...loginUser, password: hash(loginUser.password) },
+        update(_, { data: { login } }) {
+            cookie.set("token", login.token);
+            setUser({ ...login, token: login.token })
+        },
+        onError() {
+            setFeedbackAlert({ visibility: true, title: "Invalid username or password !!" });
+        }
+    })
 
     const submitForm = (event) => {
         event.preventDefault();
