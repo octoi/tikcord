@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import useAuthContext from '../../context/contextHook';
+import styles from '../../styles/App.module.css';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Grid, GridItem } from '@chakra-ui/react';
 
 // components
 
@@ -25,15 +25,11 @@ export default function App() {
                 <meta name="description" content="Unleash your creativity" />
             </Head>
 
-            <Grid
-                gap={4}
-                templateColumns="repeat(3, 1fr)"
-                className={ }
-            >
-                <GridItem><Sidebar /></GridItem>
-                <GridItem><Feed /></GridItem>
-                <GridItem><Users /></GridItem>
-            </Grid>
+            <div className={styles.grid}>
+                <Sidebar />
+                <Feed />
+                <Users />
+            </div>
 
         </section>
     );
