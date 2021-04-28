@@ -14,22 +14,17 @@ export default function Register() {
     const { user, setUser } = useAuthContext();
     const [loginUser, setLoginUser] = useState({ name: '', email: '', password: '', repass: '' });
     const [feedbackAlert, setFeedbackAlert] = useState({ visibility: false, title: '' });
-    const [userData, setUserData] = useState({}); // ! To avoid re render bug
     const router = useRouter();
 
     useEffect(() => {
-        if (!userData) return;
-
-        setUser(userData);
-    }, [userData])
-
-    if (user.name) router.push("/app");
+        if (Object.keys(user).length > 0) router.push("/app")
+    }, [router, user])
 
     const [RegisterUser, { loading }] = useMutation(REGISTER_QUERY, {
         variables: { ...loginUser, password: hash(loginUser.password) },
         update(_, { data: { register } }) {
             cookie.set("token", register.token);
-            setUserData(register);
+            setUser(register);
         },
         onError() {
             setFeedbackAlert({ visibility: true, title: 'Looks like there is an user with same credentials !' });
