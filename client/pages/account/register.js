@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import useAuthContext from '../../context/contextHook';
 import styles from '../../styles/Login.module.css';
+import cookie from 'js-cookie';
 import REGISTER_QUERY from '../../utils/graphql/registerQuery';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -19,8 +20,9 @@ export default function Register() {
 
     const [RegisterUser, { loading }] = useMutation(REGISTER_QUERY, {
         variables: { ...loginUser, password: hash(loginUser.password) },
-        update(_, { data }) {
-            console.log(data)
+        update(_, { data: { register } }) {
+            cookie.set("token", register.token);
+            setUser(register);
         },
         onError() {
             setFeedbackAlert({ visibility: true, title: 'Looks like there is an user with same credentials !' });
