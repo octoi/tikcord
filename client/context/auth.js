@@ -11,12 +11,14 @@ export function decodeToken(token) {
 }
 
 export function getUser() {
-    if (cookie.get("token")) {
-        const decodedData = decodeToken(cookie.get("token"));
+    const token = cookie.get("token")
+
+    if (token) {
+        const decodedData = decodeToken(token);
 
         if (!decodedData) cookie.remove("token");
 
-        return decodedData;
+        return { decodedData, token };
     }
 
     return false
