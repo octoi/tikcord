@@ -18,13 +18,13 @@ export default function Register() {
     if (user.name) router.push("/app");
 
     const [RegisterUser, { loading }] = useMutation(REGISTER_QUERY, {
-        variables: { ...loginUser, password: loginUser.password },
+        variables: { ...loginUser, password: hash(loginUser.password) },
         update(_, { data }) {
             console.log(data)
         },
-        onError(err) {
-            setLoginUser({ ...loginUser, repass: loginUser.password }); // resetting the state
-            console.info(err.graphQLErrors[0]);
+        onError() {
+            setLoginUser({ name: '', email: '', password: '', repass: '' }); // resetting the state
+            setFeedbackAlert({ visibility: true, title: 'Looks like there is an user with same credentials !' });
         }
     });
 
@@ -43,8 +43,6 @@ export default function Register() {
         }
 
         setFeedbackAlert({ visibility: false, title: '' });
-        delete loginUser.repass;
-
 
         RegisterUser();
 
