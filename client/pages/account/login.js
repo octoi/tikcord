@@ -16,11 +16,15 @@ export default function Login() {
     const [feedbackAlert, setFeedbackAlert] = useState({ visibility: false, title: '' });
     const router = useRouter();
 
+    useEffect(() => {
+        if (Object.keys(user).length > 0) router.push("/app")
+    }, [router, user])
+
     const [LoginUser] = useMutation(LOGIN_QUERY, {
         variables: { ...loginUser, password: hash(loginUser.password) },
         update(_, { data: { login } }) {
             cookie.set("token", login.token);
-            setUser({ ...login, token: login.token })
+            setUser(login);
         },
         onError() {
             setFeedbackAlert({ visibility: true, title: "Invalid username or password !!" });
@@ -40,6 +44,8 @@ export default function Login() {
         }
 
         setFeedbackAlert({ visibility: false, title: '' });
+
+        LoginUser();
 
     }
 
