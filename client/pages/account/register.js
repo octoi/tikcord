@@ -3,7 +3,7 @@ import useAuthContext from '../../context/contextHook';
 import styles from '../../styles/Login.module.css';
 import cookie from 'js-cookie';
 import REGISTER_QUERY from '../../utils/graphql/registerQuery';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { md5 as hash } from 'pure-md5';
 import { Text, Input, Button, Link } from '@chakra-ui/react';
@@ -14,7 +14,14 @@ export default function Register() {
     const { user, setUser } = useAuthContext();
     const [loginUser, setLoginUser] = useState({ name: '', email: '', password: '', repass: '' });
     const [feedbackAlert, setFeedbackAlert] = useState({ visibility: false, title: '' });
+    const [userData, setUserData] = useState({}); // ! To avoid re render bug
     const router = useRouter();
+
+    useEffect(() => {
+        if (!userData) return;
+
+        setUser(userData);
+    }, [userData])
 
     if (user.name) router.push("/app");
 
@@ -22,7 +29,7 @@ export default function Register() {
         variables: { ...loginUser, password: hash(loginUser.password) },
         update(_, { data: { register } }) {
             cookie.set("token", register.token);
-            setUser(register);
+            setUserData(register);
         },
         onError() {
             setFeedbackAlert({ visibility: true, title: 'Looks like there is an user with same credentials !' });
