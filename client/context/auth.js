@@ -14,9 +14,9 @@ export function getUser() {
     if (cookie.get("token")) {
         const decodedData = decodeToken(cookie.get("token"));
 
-        if (!decodeToken) cookie.remove("token");
+        if (!decodedData) cookie.remove("token");
 
-        return decodeToken;
+        return decodedData;
     }
 
     return false
