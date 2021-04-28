@@ -21,3 +21,10 @@ export function getUser() {
 
     return false
 }
+
+export function addToken(token) {
+    if (cookie.get("token")) return;
+
+    cookie.set("token", token)
+    return token;
+}
