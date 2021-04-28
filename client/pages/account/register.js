@@ -12,7 +12,7 @@ import { useMutation } from '@apollo/client';
 
 export default function Register() {
     const { user, setUser } = useAuthContext();
-    const [loginUser, setLoginUser] = useState({ name: '', email: '', password: '', repass: '' });
+    const [registerUser, setRegisterUser] = useState({ name: '', email: '', password: '', repass: '' });
     const [feedbackAlert, setFeedbackAlert] = useState({ visibility: false, title: '' });
     const router = useRouter();
 
@@ -20,11 +20,11 @@ export default function Register() {
         if (Object.keys(user).length > 0) router.push("/app")
     }, [router, user])
 
-    const [RegisterUser, { loading }] = useMutation(REGISTER_QUERY, {
-        variables: { ...loginUser, password: hash(loginUser.password) },
+    const [RegisterUser] = useMutation(REGISTER_QUERY, {
+        variables: { ...registerUser, password: hash(registerUser.password) },
         update(_, { data: { register } }) {
             cookie.set("token", register.token);
-            setUser({ ...register, token: register.token });
+            setUser(register);
         },
         onError() {
             setFeedbackAlert({ visibility: true, title: 'Looks like there is an user with same credentials !' });
@@ -35,12 +35,12 @@ export default function Register() {
     const submitForm = (event) => {
         event.preventDefault();
 
-        if (loginUser.password < 6) {
+        if (registerUser.password < 6) {
             setFeedbackAlert({ visibility: true, title: 'Password must be at least 6 characters !' })
             return;
         }
 
-        if (loginUser.password !== loginUser.repass) {
+        if (registerUser.password !== registerUser.repass) {
             setFeedbackAlert({ visibility: true, title: 'Password must be match !' })
             return;
         }
@@ -79,28 +79,28 @@ export default function Register() {
                     <Input
                         placeholder="Full name"
                         type="text"
-                        onChange={e => setLoginUser({ ...loginUser, name: e.target.value })}
+                        onChange={e => setRegisterUser({ ...registerUser, name: e.target.value })}
                         required
                     />
                     <Input
                         className={styles.mt}
                         placeholder="Email address"
                         type="email"
-                        onChange={e => setLoginUser({ ...loginUser, email: e.target.value })}
+                        onChange={e => setRegisterUser({ ...registerUser, email: e.target.value })}
                         required
                     />
                     <Input
                         className={styles.mt}
                         placeholder="Password"
                         type="password"
-                        onChange={e => setLoginUser({ ...loginUser, password: e.target.value })}
+                        onChange={e => setRegisterUser({ ...registerUser, password: e.target.value })}
                         required
                     />
                     <Input
                         className={styles.mt}
                         placeholder="Retype password"
                         type="password"
-                        onChange={e => setLoginUser({ ...loginUser, repass: e.target.value })}
+                        onChange={e => setRegisterUser({ ...registerUser, repass: e.target.value })}
                         required
                     />
 
