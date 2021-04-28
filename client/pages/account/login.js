@@ -28,7 +28,6 @@ export default function Login() {
         }
 
         setFeedbackAlert({ visibility: false, title: '' });
-        setLoginUser({ ...loginUser, password: hash(loginUser.password) }); // hashing password
 
     }
 
@@ -60,6 +59,7 @@ export default function Login() {
                     <Input
                         placeholder="Email address"
                         type="email"
+                        value={loginUser.email}
                         onChange={e => setLoginUser({ ...loginUser, email: e.target.value })}
                         required
                     />
@@ -67,6 +67,7 @@ export default function Login() {
                         className={styles.mt}
                         placeholder="Password"
                         type="password"
+                        value={loginUser.password}
                         onChange={e => setLoginUser({ ...loginUser, password: e.target.value })}
                         required
                     />
