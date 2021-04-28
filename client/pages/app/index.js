@@ -8,7 +8,7 @@ export default function App() {
     const router = useRouter();
 
     useEffect(() => {
-        if (Object.keys(user).length > 0) router.push('/app');
+        if (Object.keys(user).length == 0) router.push('/account/login');
     }, [user, router]);
 
     return (
