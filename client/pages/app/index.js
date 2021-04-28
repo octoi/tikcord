@@ -19,7 +19,7 @@ export default function App() {
     }, [user, router]);
 
     return (
-        <section>
+        <section style={{ marginTop: 20 }}>
             <Head>
                 <title>Tikcord</title>
                 <meta name="description" content="Unleash your creativity" />
