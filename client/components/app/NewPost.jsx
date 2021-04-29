@@ -18,6 +18,21 @@ export default function NewPost({ isOpen, onClose }) {
 
     const fileInput = useRef();
 
+    const selectFile = () => {
+        const fileInputEl = fileInput.current;
+
+        fileInputEl.click();
+
+        fileInputEl.addEventListener("change", (event) => {
+            let file = event.target.files[0];
+            var reader = new FileReader();
+
+            reader.onloadend = () => setPost({ ...post, video: reader.result });
+
+            if (file) reader.readAsDataURL(file);
+        });
+    }
+
     return (
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
             <ModalOverlay />
@@ -25,12 +40,18 @@ export default function NewPost({ isOpen, onClose }) {
                 <ModalHeader>Create Your Tik</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                    <Button mb={5} width="100%">Select a video</Button>
+                    <Button mb={5} width="100%" onClick={selectFile}>Select a video</Button>
                     <Textarea
                         placeholder="description"
+                        value={post.description}
+                        onChange={(e) => setPost({ ...post, description: e.target.value })}
                     />
                     <VisuallyHidden>
-                        <Input ref={fileInput} type="file" />
+                        <Input
+                            ref={fileInput}
+                            type="file"
+                            accept="video/*"
+                        />
                     </VisuallyHidden>
                 </ModalBody>
 
