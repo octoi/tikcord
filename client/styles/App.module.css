@@ -4,9 +4,18 @@
     justify-content: space-between;
 }
 
+
+/* feed  */
+
 .feedContainer {
     display: flex;
     justify-content: start;
     width: 100%;
     margin-left: 200px;
+}
+
+.feedSubContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
