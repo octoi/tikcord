@@ -9,7 +9,6 @@ export default function Sidebar({ posts }) {
                 <Text fontSize="2xl">Your Feed</Text>
                 {!posts && <NoPosts />}
             </div>
-
         </section>
     );
 }
