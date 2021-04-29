@@ -4,4 +4,9 @@
     justify-content: space-between;
 }
 
-/* sidebar */
+.feedContainer {
+    display: flex;
+    justify-content: start;
+    width: 100%;
+    margin-left: 200px;
+}
