@@ -5,9 +5,9 @@ export default function Sidebar() {
     return (
         <div>
             <IconButton Icon={HomeIcon} text="Home" link="/app" />
-            <IconButton Icon={UserIcon} text="Profile" link="/profile" mt />
-            <IconButton Icon={CogIcon} text="Settings" link="/settings" mt />
-            <IconButton Icon={PlusCircleIcon} text="Create" link="/new" mt solid />
+            <IconButton Icon={UserIcon} text="Profile" link="/app/profile" mt />
+            <IconButton Icon={CogIcon} text="Settings" link="/app/settings" mt />
+            <IconButton Icon={PlusCircleIcon} text="Create" link="/app/new" mt solid />
         </div>
     );
 }
