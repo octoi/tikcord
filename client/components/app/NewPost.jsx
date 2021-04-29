@@ -3,6 +3,7 @@ import {
     Button,
     Input,
     Textarea,
+    Progress,
     VisuallyHidden,
     Modal,
     ModalOverlay,
@@ -18,19 +19,13 @@ export default function NewPost({ isOpen, onClose }) {
 
     const fileInput = useRef();
 
-    const selectFile = () => {
-        const fileInputEl = fileInput.current;
+    const getFile = (event) => {
+        let file = event.target.files[0];
+        var reader = new FileReader();
 
-        fileInputEl.click();
+        reader.onloadend = () => setPost({ ...post, video: reader.result });
 
-        fileInputEl.addEventListener("change", (event) => {
-            let file = event.target.files[0];
-            var reader = new FileReader();
-
-            reader.onloadend = () => setPost({ ...post, video: reader.result });
-
-            if (file) reader.readAsDataURL(file);
-        });
+        if (file) reader.readAsDataURL(file);
     }
 
     return (
@@ -40,7 +35,8 @@ export default function NewPost({ isOpen, onClose }) {
                 <ModalHeader>Create Your Tik</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                    <Button mb={5} width="100%" onClick={selectFile}>Select a video</Button>
+                    <Progress visibility={true} colorScheme="twitter" mb={5} size="xs" isIndeterminate />
+                    <Button mb={5} width="100%" onClick={() => fileInput.current.click()}>Select a video</Button>
                     <Textarea
                         placeholder="description"
                         value={post.description}
@@ -51,6 +47,7 @@ export default function NewPost({ isOpen, onClose }) {
                             ref={fileInput}
                             type="file"
                             accept="video/*"
+                            onChange={getFile}
                         />
                     </VisuallyHidden>
                 </ModalBody>
