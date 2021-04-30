@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
     Button,
     Input,
@@ -20,12 +20,17 @@ export default function NewPost({ isOpen, onClose }) {
 
     const fileInput = useRef();
 
+    useEffect(() => {
+        if (post.video.length > 0) setLoader(false);
+    }, [post])
+
     const imagePicker = () => {
         let fileUploader = fileInput.current;
 
         fileUploader.click();
 
         fileUploader.addEventListener("change", (event) => {
+            setLoader(true)
             let file = event.target.files[0];
             var reader = new FileReader();
 
