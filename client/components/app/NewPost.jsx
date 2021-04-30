@@ -16,6 +16,7 @@ import {
 
 export default function NewPost({ isOpen, onClose }) {
     const [post, setPost] = useState({ video: '', description: '' });
+    const [loader, setLoader] = useState(false);
 
     const fileInput = useRef();
 
@@ -41,7 +42,7 @@ export default function NewPost({ isOpen, onClose }) {
                 <ModalHeader>Create Your Tik</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                    <Progress visibility={true} colorScheme="twitter" mb={5} size="xs" isIndeterminate />
+                    <Progress visibility={true} colorScheme="twitter" mb={5} size="xs" isIndeterminate style={{ display: `${loader ? "block" : "none"}` }} />
                     <Button mb={5} width="100%" onClick={imagePicker}>Select a video</Button>
                     <Textarea
                         placeholder="description"
