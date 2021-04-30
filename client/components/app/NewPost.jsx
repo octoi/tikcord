@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 
 export default function NewPost({ isOpen, onClose }) {
-    const [post, setPost] = useState({ video: '', description: '' });
+    const [post, setPost] = useState({ video: '', description: '', fileName: 'Select a file' });
     const [loader, setLoader] = useState(false);
 
     const fileInput = useRef();
@@ -32,9 +32,10 @@ export default function NewPost({ isOpen, onClose }) {
         fileUploader.addEventListener("change", (event) => {
             setLoader(true)
             let file = event.target.files[0];
+
             var reader = new FileReader();
 
-            reader.onloadend = () => setPost({ ...post, video: reader.result });
+            reader.onloadend = () => setPost({ ...post, video: reader.result, fileName: file.name });
 
             if (file) reader.readAsDataURL(file);
         });
@@ -57,7 +58,7 @@ export default function NewPost({ isOpen, onClose }) {
                 <ModalCloseButton />
                 <ModalBody>
                     <Progress visibility={true} colorScheme="twitter" mb={5} size="xs" isIndeterminate style={{ display: `${loader ? "block" : "none"}` }} />
-                    <Button mb={5} width="100%" onClick={imagePicker}>Select a video</Button>
+                    <Button mb={5} width="100%" onClick={imagePicker}>{post.fileName}</Button>
                     <Textarea
                         placeholder="description"
                         value={post.description}
