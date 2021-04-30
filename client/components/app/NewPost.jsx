@@ -40,6 +40,15 @@ export default function NewPost({ isOpen, onClose }) {
         });
     }
 
+    const submitForm = () => {
+        if (post.video.length === 0 || post.description.length === 0) {
+            alert("Please complete the form");
+            return;
+        }
+
+        setLoader(true)
+    }
+
     return (
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
             <ModalOverlay />
@@ -64,7 +73,7 @@ export default function NewPost({ isOpen, onClose }) {
                 </ModalBody>
 
                 <ModalFooter>
-                    <Button colorScheme="twitter">Create</Button>
+                    <Button colorScheme="twitter" onClick={submitForm}>Create</Button>
                     <Button ml={3} onClick={onClose} variant="ghost">Cancel</Button>
                 </ModalFooter>
             </ModalContent>
