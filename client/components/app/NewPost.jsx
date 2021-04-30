@@ -19,13 +19,19 @@ export default function NewPost({ isOpen, onClose }) {
 
     const fileInput = useRef();
 
-    const getFile = (event) => {
-        let file = event.target.files[0];
-        var reader = new FileReader();
+    const imagePicker = () => {
+        let fileUploader = fileInput.current;
 
-        reader.onloadend = () => setPost({ ...post, video: reader.result });
+        fileUploader.click();
 
-        if (file) reader.readAsDataURL(file);
+        fileUploader.addEventListener("change", (event) => {
+            let file = event.target.files[0];
+            var reader = new FileReader();
+
+            reader.onloadend = () => setPost({ ...post, video: reader.result });
+
+            if (file) reader.readAsDataURL(file);
+        });
     }
 
     return (
@@ -36,7 +42,7 @@ export default function NewPost({ isOpen, onClose }) {
                 <ModalCloseButton />
                 <ModalBody>
                     <Progress visibility={true} colorScheme="twitter" mb={5} size="xs" isIndeterminate />
-                    <Button mb={5} width="100%" onClick={() => fileInput.current.click()}>Select a video</Button>
+                    <Button mb={5} width="100%" onClick={imagePicker}>Select a video</Button>
                     <Textarea
                         placeholder="description"
                         value={post.description}
@@ -47,7 +53,6 @@ export default function NewPost({ isOpen, onClose }) {
                             ref={fileInput}
                             type="file"
                             accept="video/*"
-                            onChange={getFile}
                         />
                     </VisuallyHidden>
                 </ModalBody>
