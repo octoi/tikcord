@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import useAuthContext from '../../context/contextHook';
 import styles from '../../styles/App.module.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 // components
@@ -12,6 +12,7 @@ import Users from '../../components/app/Users';
 
 export default function App() {
     const { user, setUser } = useAuthContext();
+    const [posts, setPosts] = useState([]);
     const router = useRouter();
 
     useEffect(() => {
@@ -27,7 +28,7 @@ export default function App() {
 
             <div className={styles.grid}>
                 <Sidebar />
-                <Feed />
+                <Feed posts={posts} />
                 <Users />
             </div>
 
