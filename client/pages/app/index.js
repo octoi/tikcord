@@ -24,7 +24,7 @@ export default function App() {
     }, [user, router]);
 
     useEffect(() => {
-        setPosts(data.getPosts)
+        setPosts(data?.getPosts)
     }, [data]);
 
     return (
@@ -36,7 +36,7 @@ export default function App() {
 
             <div className={styles.grid}>
                 <Sidebar />
-                <Feed posts={posts} />
+                <Feed posts={posts} loading={loading} />
                 <Users />
             </div>
 
