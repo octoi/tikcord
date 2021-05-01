@@ -1,20 +1,20 @@
 const userResolvers = require("./user");
-const videoResolvers = require("./video");
+const postResolvers = require("./post");
 
-const { getCommentCount, getLikeCount } = require("../utils/getVideoUtils");
+const { getCommentCount, getLikeCount } = require("../utils/getPostUtils");
 
 module.exports = {
-    Video:{
+    Video: {
         likeCount: getLikeCount,
         commentCount: getCommentCount,
         createdAt: (parent) => parent.createdat,
     },
     Query: {
         ...userResolvers.Query,
-        ...videoResolvers.Query  
+        ...postResolvers.Query
     },
     Mutation: {
         ...userResolvers.Mutation,
-        ...videoResolvers.Mutation
+        ...postResolvers.Mutation
     }
 }
