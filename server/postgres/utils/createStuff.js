@@ -10,7 +10,7 @@ module.exports = (pool) => {
         )
     `);
     pool.query(`
-        CREATE TABLE IF NOT EXISTS tikvideo(
+        CREATE TABLE IF NOT EXISTS tikpost(
             id SERIAL PRIMARY KEY,
             creator TEXT,
             email TEXT,
