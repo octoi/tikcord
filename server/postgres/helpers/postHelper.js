@@ -1,15 +1,15 @@
 const pool = require("../setup");
-const { videoTable, likeTable, commentTable, userTable } = require("../constants");
+const { postTable, likeTable, commentTable, userTable } = require("../constants");
 
 module.exports = {
 
     // get videos
 
-    getAllVideos: () => {
+    getAllPosts: () => {
         return new Promise((resolve, reject) => {
 
-            pool.query(`SELECT * FROM tikvideo`).then(videos => {
-                resolve(videos);
+            pool.query(`SELECT * FROM ${postTable}`).then(posts => {
+                resolve(posts);
             }).catch(err => {
                 console.log(err.message);
                 reject()
@@ -18,10 +18,10 @@ module.exports = {
         });
     },
 
-    getUserVideos: (email) => {
+    getUserPosts: (email) => {
         return new Promise((resolve, reject) => {
 
-            pool.query(`SELECT * FROM ${videoTable} WHERE email = $1`, [email]).then(data => {
+            pool.query(`SELECT * FROM ${postTable} WHERE email = $1`, [email]).then(data => {
                 resolve(data);
             }).catch(err => {
                 console.log(err.message);
@@ -33,13 +33,13 @@ module.exports = {
 
     // create videos
 
-    createVideo: (videoData) => {
+    createPost: (postData) => {
         return new Promise((resolve, reject) => {
-            const { creator, content, description, createdAt, likeCount, commentCount, email } = videoData;
+            const { creator, content, description, createdAt, likeCount, commentCount, email } = postData;
 
-            pool.query(`INSERT INTO ${videoTable} (creator, content, description, createdAt, likeCount, commentCount, email) VALUES ($1, $2, $3, $4, $5, $6, $7)`, [creator, content, description, createdAt, likeCount, commentCount, email]).then(() => {
-                pool.query(`SELECT * FROM ${videoTable} WHERE createdAt = $1`, [createdAt]).then(({ rows }) => {
-                    resolve({ ...videoData, id: rows[0].id });
+            pool.query(`INSERT INTO ${postTable} (creator, content, description, createdAt, likeCount, commentCount, email) VALUES ($1, $2, $3, $4, $5, $6, $7)`, [creator, content, description, createdAt, likeCount, commentCount, email]).then(() => {
+                pool.query(`SELECT * FROM ${postTable} WHERE createdAt = $1`, [createdAt]).then(({ rows }) => {
+                    resolve({ ...postData, id: rows[0].id });
                 })
             }).catch(err => {
                 console.log(err.message)
@@ -50,12 +50,12 @@ module.exports = {
     },
 
 
-    // video utils 
+    // Post utils 
 
-    getVideoLikes: (id) => {
+    getPostLikes: (id) => {
         return new Promise((resolve, reject) => {
 
-            pool.query(`SELECT * FROM ${likeTable} WHERE video = $1`, [id]).then(data => {
+            pool.query(`SELECT * FROM ${likeTable} WHERE post = $1`, [id]).then(data => {
                 resolve(data)
             }).catch(err => {
                 console.log(err.message)
@@ -65,10 +65,10 @@ module.exports = {
         });
     },
 
-    getVideoComments: (id) => {
+    getPostComments: (id) => {
         return new Promise((resolve, reject) => {
 
-            pool.query(`SELECT * FROM ${commentTable} WHERE video = $1`, [id]).then(data => {
+            pool.query(`SELECT * FROM ${commentTable} WHERE post = $1`, [id]).then(data => {
                 resolve(data);
             }).catch(err => {
                 console.log(err.message);
@@ -79,16 +79,16 @@ module.exports = {
         });
     },
 
-    likeAVideo: ({ creator, video }) => {
+    likeAPost: ({ creator, video: post }) => {
         return new Promise((resolve, reject) => {
 
-            pool.query(`SELECT * FROM ${likeTable} WHERE video = $1 AND creator = $2`, [video, creator]).then(({ rows: data }) => {
+            pool.query(`SELECT * FROM ${likeTable} WHERE post = $1 AND creator = $2`, [post, creator]).then(({ rows: data }) => {
                 if (data.length > 0) {
-                    pool.query(`DELETE FROM ${likeTable} WHERE video = $1 AND creator = $2`, [video, creator]).then(({ rows: data }) => {
+                    pool.query(`DELETE FROM ${likeTable} WHERE post = $1 AND creator = $2`, [post, creator]).then(({ rows: data }) => {
                         resolve(data)
                     });
                 } else {
-                    pool.query(`INSERT INTO ${likeTable} (creator, video) VALUES ($1, $2)`, [creator, video]).then(({ rows: data }) => {
+                    pool.query(`INSERT INTO ${likeTable} (creator, post) VALUES ($1, $2)`, [creator, post]).then(({ rows: data }) => {
                         resolve(data);
                     });
                 }
@@ -100,10 +100,10 @@ module.exports = {
         });
     },
 
-    createComment: ({ content, creator, video, createdAt }) => {
+    createComment: ({ content, creator, post, createdAt }) => {
         return new Promise((resolve, reject) => {
 
-            pool.query(`INSERT INTO ${commentTable} (content, creator, video, createdAt) VALUES ($1, $2, $3, $4) `, [content, creator, video, createdAt]).then(({ rows: data }) => {
+            pool.query(`INSERT INTO ${commentTable} (content, creator, post, createdAt) VALUES ($1, $2, $3, $4) `, [content, creator, post, createdAt]).then(({ rows: data }) => {
                 resolve(data)
             }).catch(err => {
                 console.log(err.message);
@@ -140,14 +140,14 @@ module.exports = {
         });
     },
 
-    // delete video
+    // delete post
 
-    deleteVideo: (id, user) => {
+    deletePost: (id, user) => {
         return new Promise((resolve, reject) => {
-            pool.query(`SELECT * FROM ${videoTable} WHERE id = $1`, [id]).then(({ rows: video }) => {
+            pool.query(`SELECT * FROM ${postTable} WHERE id = $1`, [id]).then(({ rows: post }) => {
 
-                if (video[0].email == user.email) {
-                    pool.query(`DELETE FROM ${videoTable} WHERE id = $1`, [id]).then(() => {
+                if (post[0].email == user.email) {
+                    pool.query(`DELETE FROM ${postTable} WHERE id = $1`, [id]).then(() => {
                         resolve();
                     }).catch(err => {
                         console.log(err.message);
