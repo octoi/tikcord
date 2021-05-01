@@ -2,11 +2,12 @@ import styles from '../../styles/Header.module.css';
 import useAuthContext from '../../context/contextHook';
 import NewPost from '../app/NewPost';
 
-import { Avatar, Button, Stack, Menu, MenuList, MenuButton, MenuItem } from '@chakra-ui/react';
+import { Avatar, Button, Stack, Menu, MenuList, MenuButton, MenuItem, useDisclosure } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 export default function Header() {
     const { user } = useAuthContext();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const router = useRouter();
 
@@ -23,8 +24,9 @@ export default function Header() {
                             <MenuItem onClick={() => router.push("/app")} minH="48px">Home</MenuItem>
                             <MenuItem onClick={() => router.push("/app/profile")} minH="48px">Profile</MenuItem>
                             <MenuItem onClick={() => router.push("/app/settings")} minH="48px">Settings</MenuItem>
-                            <MenuItem onClick={ } color="teal.400" minH="48px">Create</MenuItem>
+                            <MenuItem onClick={onOpen} color="teal.400" minH="48px">Create</MenuItem>
                         </MenuList>
+                        <NewPost isOpen={isOpen} onClose={onClose} />
                     </Menu>
                 )}
                 {!user.name && (
