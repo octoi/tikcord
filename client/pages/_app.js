@@ -1,13 +1,25 @@
 import '../styles/globals.css';
+import cookie from 'js-cookie';
 import Header from '../components/shared/Header';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { AppContext } from '../context/AppContext';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { setContext } from 'apollo-link-context';
+
 
 const theme = extendTheme({
     config: {
         initialColorMode: "dark",
         useSystemColorMode: false
+    }
+});
+
+const authLink = setContext(() => {
+    const token = cookie.get("token");
+    return {
+        headers: {
+            Authorization: token ? `Bearer ${token}` : ''
+        }
     }
 });
 

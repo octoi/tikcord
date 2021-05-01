@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
+import CREATE_POST_QUERY from '../../utils/graphql/createPostQuery';
+import { useMutation } from '@apollo/client';
 import {
     Button,
     Input,
@@ -24,6 +26,18 @@ export default function NewPost({ isOpen, onClose }) {
         if (post.video.length > 0) setLoader(false);
     }, [post])
 
+    const [CreatePost] = useMutation(CREATE_POST_QUERY, {
+        variables: post,
+        update(_, { data }) {
+            setLoader(false);
+            console.log(data);
+        },
+        onError() {
+            console.log(error);
+            console.log("error");
+        }
+    });
+
     const imagePicker = () => {
         let fileUploader = fileInput.current;
 
@@ -47,7 +61,9 @@ export default function NewPost({ isOpen, onClose }) {
             return;
         }
 
-        setLoader(true)
+        setLoader(true);
+        CreatePost();
+
     }
 
     return (
