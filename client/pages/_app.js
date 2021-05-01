@@ -3,7 +3,7 @@ import cookie from 'js-cookie';
 import Header from '../components/shared/Header';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { AppContext } from '../context/AppContext';
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from 'apollo-link-context';
 
 
@@ -13,6 +13,8 @@ const theme = extendTheme({
         useSystemColorMode: false
     }
 });
+
+const httpLink = createHttpLink({ uri: process.env.SERVER_URL || 'http://localhost:8080' });
 
 const authLink = setContext(() => {
     const token = cookie.get("token");
@@ -24,7 +26,7 @@ const authLink = setContext(() => {
 });
 
 const client = new ApolloClient({
-    uri: process.env.SERVER_URL || 'http://localhost:8080',
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
 });
 
