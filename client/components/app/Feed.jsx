@@ -3,12 +3,12 @@ import NoPosts from './feed/NoPosts';
 import AllPosts from './feed/AllPosts';
 import { Text } from '@chakra-ui/react'
 
-export default function Sidebar({ posts }) {
+export default function Feed({ posts }) {
     return (
         <section className={styles.feedContainer}>
             <div className={styles.feedSubContainer}>
                 <Text fontSize="2xl">Your Feed</Text>
-                {!posts && <NoPosts />}
+                {posts.length > 0 && <NoPosts />}
                 <AllPosts />
             </div>
         </section>
