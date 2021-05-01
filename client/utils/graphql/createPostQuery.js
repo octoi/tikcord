@@ -10,12 +10,15 @@ const createPostQuery = gql`
             description: $description
         ){
             id
-            user
             content
             description
-            createdAt
             likeCount
             commentCount
+            creator{
+                name
+                email
+                profile
+            }
         }
     }
 `;
