@@ -27,10 +27,11 @@ export default function NewPost({ isOpen, onClose }) {
     }, [post])
 
     const [CreatePost] = useMutation(CREATE_POST_QUERY, {
-        variables: post,
-        update(_, { data }) {
+        variables: { content: post.video, description: post.description },
+        update() {
             setLoader(false);
-            console.log(data);
+            setPost({ video: '', description: '', fileName: 'Select a file' })
+            onClose();
         },
         onError() {
             console.log("error");
