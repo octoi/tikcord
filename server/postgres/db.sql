@@ -21,7 +21,7 @@ CREATE TABLE tikpost(
 CREATE TABLE tiklike(
     id SERIAL PRIMARY KEY,
     creator TEXT,
-    video TEXT
+    post TEXT
 )
 
 CREATE TABLE tikcomment(
@@ -29,5 +29,5 @@ CREATE TABLE tikcomment(
     createdAt TEXT,
     creator TEXT,
     content TEXT,
-    video TEXT
+    post TEXT
 )

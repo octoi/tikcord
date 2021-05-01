@@ -25,8 +25,7 @@ module.exports = (pool) => {
         CREATE TABLE IF NOT EXISTS tiklike(
             id SERIAL PRIMARY KEY,
             creator TEXT,
-            video TEXT
-
+            post TEXT
         )
     `)
     pool.query(`
@@ -35,7 +34,7 @@ module.exports = (pool) => {
             createdAt TEXT,
             creator TEXT,
             content TEXT,
-            video TEXT
+            post TEXT
         )
     `)
 }
