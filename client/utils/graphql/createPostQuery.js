@@ -4,7 +4,7 @@ const createPostQuery = gql`
     mutation createVideo(
         $content: String!,
         $description: String!
-){
+    ){
         createVideo(
             content: $content
             description: $description
