@@ -9,7 +9,7 @@ CREATE TABLE tikuser(
     profile TEXT,
 );
 
-CREATE TABLE tikvideo(
+CREATE TABLE tikpost(
     id SERIAL PRIMARY KEY,
     creator TEXT,
     email TEXT,
