@@ -34,7 +34,10 @@ export default function NewPost({ isOpen, onClose }) {
             onClose();
         },
         onError() {
-            console.log("error");
+            setLoader(false)
+            setPost({ post: '', description: '', fileName: 'Select a file' })
+            alert("oops something went wrong")
+            onClose();
         }
     });
 
