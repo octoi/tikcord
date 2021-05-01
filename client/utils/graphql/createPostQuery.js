@@ -5,7 +5,7 @@ const createPostQuery = gql`
         $content: String!,
         $description: String!
     ){
-        createVideo(
+        createPost(
             content: $content
             description: $description
         ){

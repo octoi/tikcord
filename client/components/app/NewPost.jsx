@@ -17,20 +17,20 @@ import {
 } from '@chakra-ui/react';
 
 export default function NewPost({ isOpen, onClose }) {
-    const [post, setPost] = useState({ video: '', description: '', fileName: 'Select a file' });
+    const [post, setPost] = useState({ post: '', description: '', fileName: 'Select a file' });
     const [loader, setLoader] = useState(false);
 
     const fileInput = useRef();
 
     useEffect(() => {
-        if (post.video.length > 0) setLoader(false);
+        if (post.post.length > 0) setLoader(false);
     }, [post])
 
     const [CreatePost] = useMutation(CREATE_POST_QUERY, {
-        variables: { content: post.video, description: post.description },
+        variables: { content: post.post, description: post.description },
         update() {
             setLoader(false);
-            setPost({ video: '', description: '', fileName: 'Select a file' })
+            setPost({ post: '', description: '', fileName: 'Select a file' })
             onClose();
         },
         onError() {
@@ -49,14 +49,14 @@ export default function NewPost({ isOpen, onClose }) {
 
             var reader = new FileReader();
 
-            reader.onloadend = () => setPost({ ...post, video: reader.result, fileName: file.name });
+            reader.onloadend = () => setPost({ ...post, post: reader.result, fileName: file.name });
 
             if (file) reader.readAsDataURL(file);
         });
     }
 
     const submitForm = () => {
-        if (post.video.length === 0 || post.description.length === 0) {
+        if (post.post.length === 0 || post.description.length === 0) {
             alert("Please complete the form");
             return;
         }
@@ -84,14 +84,21 @@ export default function NewPost({ isOpen, onClose }) {
                         <Input
                             ref={fileInput}
                             type="file"
-                            accept="video/*"
+                            accept="image/*"
                         />
                     </VisuallyHidden>
                 </ModalBody>
 
                 <ModalFooter>
                     <Button colorScheme="twitter" onClick={submitForm}>Create</Button>
-                    <Button ml={3} onClick={onClose} variant="ghost">Cancel</Button>
+                    <Button
+                        ml={3}
+                        onClick={() => {
+                            setPost({ post: '', description: '', fileName: 'Select a file' });
+                            onClose();
+                        }}
+                        variant="ghost"
+                    >Cancel</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>
