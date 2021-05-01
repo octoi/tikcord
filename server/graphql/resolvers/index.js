@@ -4,7 +4,7 @@ const postResolvers = require("./post");
 const { getCommentCount, getLikeCount } = require("../utils/getPostUtils");
 
 module.exports = {
-    Video: {
+    Post: {
         likeCount: getLikeCount,
         commentCount: getCommentCount,
         createdAt: (parent) => parent.createdat,

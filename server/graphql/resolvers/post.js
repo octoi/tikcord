@@ -133,7 +133,7 @@ const Query = {
 
     },
 
-    getVideoLikers: async (_, { post }) => {
+    getPostLikers: async (_, { post }) => {
         const likesFromDb = await getPostLikes(post);
 
         if (!likesFromDb.rows) return;
