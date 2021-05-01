@@ -1,14 +1,27 @@
 const checkAuth = require("../utils/checkAuth");
-const { createVideo, getAllVideos, getUserVideos, deleteVideo: deleteUserVideo, likeAVideo, createComment, removeComment, getVideoComments : getVideoCommentsFromDb, getVideoLikes } = require("../../postgres/helper");
-const { getVideosFromCache, addVideoToCache } = require("../../redis/helper");
+const {
+    createPost: createAPost,
+    getAllPosts,
+    getUserPosts: getUserPostsFromDb,
+    deletePost: deleteUserPost,
+    likeAPost,
+    createComment,
+    removeComment,
+    getPostComments: getPostCommentsFromDb,
+    getPostLikes
+} = require("../../postgres/helper");
+const {
+    getVideosFromCache: getPostsFromCache,
+    addVideoToCache: addPostToCache
+} = require("../../redis/helper");
 
 const Mutation = {
 
-    createVideo: async (_, videoData, context) => {
+    createPost: async (_, postData, context) => {
         const user = checkAuth(context);
 
-        videoData = {
-            ...videoData,
+        postData = {
+            ...postData,
             creator: JSON.stringify(user),
             email: user.email,
             createdAt: Date.now(),
@@ -16,9 +29,9 @@ const Mutation = {
             commentCount: 0,
         }
 
-        const data = await createVideo(videoData);
-        await addVideoToCache({ ...data, creator: user }); // adding data to cache
-        
+        const data = await createAPost(postData);
+        await addPostToCache({ ...data, creator: user }); // adding data to cache
+
         return {
             ...data,
             creator: user
@@ -26,29 +39,29 @@ const Mutation = {
 
     },
 
-    deleteVideo: async (_, { id }, context) => {
+    deletePost: async (_, { id }, context) => {
         const user = checkAuth(context);
 
-        await deleteUserVideo(id, user);
-        
+        await deleteUserPost(id, user);
+
         return "deleted";
 
     },
 
-    likeVideo: async (_, { video }, context) => {
+    likePost: async (_, { post }, context) => {
         const user = checkAuth(context);
 
         const like = {
             creator: user,
-            video
+            post
         }
 
-        await likeAVideo(like);
+        await likeAPost(like);
         return like;
 
     },
 
-    commentVideo: async (_, data, context) => {
+    commentPost: async (_, data, context) => {
         const user = checkAuth(context);
 
         const comment = {
@@ -58,7 +71,7 @@ const Mutation = {
         }
 
         await createComment(comment);
-        
+
         return comment;
     },
 
@@ -67,7 +80,7 @@ const Mutation = {
 
         const deleteComment = await removeComment(user, comment);
 
-        if(deleteComment){
+        if (deleteComment) {
             return "deleted";
         }
     }
@@ -76,41 +89,38 @@ const Mutation = {
 
 const Query = {
 
-    getVideos: async () => {
-        let videos = [];
+    getPosts: async () => {
+        let posts = [];
 
-        videos = await getVideosFromCache();
+        posts = await getPostsFromCache();
 
-        if(videos.length > 0){
-            return videos;
-        }
+        if (posts.length > 0) return posts;
 
-        const videosRaw = await getAllVideos();
+        const postsRaw = await getAllPosts();
 
-        videosRaw.rows.forEach(async video => {
-            videos.push({ ...video, creator: JSON.parse(video.creator) });
-            await addVideoToCache({ ...video, creator: JSON.parse(video.creator) });
+        postsRaw.rows.forEach(async post => {
+            posts.push({ ...post, creator: JSON.parse(post.creator) });
+            await addPostToCache({ ...post, creator: JSON.parse(post.creator) });
         });
 
-        
-        return videos;
+        return posts;
     },
 
-    getUserVideo: async (_, { email }) => {
-        const videosRaw = await getUserVideos(email);
-        const videos = [];
+    getUserPosts: async (_, { email }) => {
+        const postsRaw = await getUserPostsFromDb(email);
+        const posts = [];
 
-        videosRaw.rows.forEach(video => {
-            videos.push({ ...video, creator: JSON.parse(video.creator) });
+        postsRaw.rows.forEach(post => {
+            posts.push({ ...post, creator: JSON.parse(post.creator) });
         });
 
-        return videos;
+        return posts;
     },
 
-    getVideoComments: async (_, { video }) => {
-        const commentsFromDb = await getVideoCommentsFromDb(video);
-        
-        if(!commentsFromDb.rows) return;
+    getPostComments: async (_, { post }) => {
+        const commentsFromDb = await getPostCommentsFromDb(post);
+
+        if (!commentsFromDb.rows) return;
 
         const comments = commentsFromDb.rows
 
@@ -120,13 +130,13 @@ const Query = {
         });
 
         return comments;
-        
+
     },
 
-    getVideoLikers: async (_, { video }) => {
-        const likesFromDb = await getVideoLikes(video);
+    getVideoLikers: async (_, { post }) => {
+        const likesFromDb = await getPostLikes(post);
 
-        if(!likesFromDb.rows) return;
+        if (!likesFromDb.rows) return;
 
         const likes = likesFromDb.rows;
 
