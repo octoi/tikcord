@@ -1,7 +1,7 @@
 const userHelper = require("./helpers/userHelper");
-const videoHelper = require("./helpers/videoHelper");
+const postHelper = require("./helpers/postHelper");
 
 module.exports = {
     ...userHelper,
-    ...videoHelper
+    ...postHelper
 }
