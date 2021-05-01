@@ -1,8 +1,10 @@
 import Head from 'next/head';
 import useAuthContext from '../../context/contextHook';
 import styles from '../../styles/App.module.css';
+import FETCH_POST_QUERY from '../../utils/graphql/fetchPostsQuery';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useQuery } from '@apollo/client';
 
 // components
 
@@ -15,9 +17,15 @@ export default function App() {
     const [posts, setPosts] = useState([]);
     const router = useRouter();
 
+    const { loading, data } = useQuery(FETCH_POST_QUERY);
+
     useEffect(() => {
         if (Object.keys(user).length == 0) router.push('/account/login');
     }, [user, router]);
+
+    useEffect(() => {
+        setPosts(data.getPosts)
+    }, [data]);
 
     return (
         <section style={{ marginTop: 30 }}>
