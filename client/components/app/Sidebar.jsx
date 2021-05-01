@@ -1,7 +1,7 @@
 import IconButton from './sidebar/IconButtton';
 import NewPost from './NewPost';
 import { HomeIcon, UserIcon, CogIcon, PlusCircleIcon } from '@heroicons/react/solid'
-import { Button, useDisclosure } from '@chakra-ui/react';
+import { seDisclosure } from '@chakra-ui/react';
 
 export default function Sidebar() {
     const { isOpen, onOpen, onClose } = useDisclosure();
