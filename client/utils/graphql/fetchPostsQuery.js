@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 const fetchPosts = gql`
     {
-        getVideos{
+        getPosts{
             id
             content
             description

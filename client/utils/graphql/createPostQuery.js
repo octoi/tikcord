@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const createPostQuery = gql`
-    mutation createVideo(
+    mutation createPost(
         $content: String!,
         $description: String!
     ){
