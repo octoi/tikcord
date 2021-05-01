@@ -33,7 +33,6 @@ export default function NewPost({ isOpen, onClose }) {
             console.log(data);
         },
         onError() {
-            console.log(error);
             console.log("error");
         }
     });
