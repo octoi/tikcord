@@ -4,16 +4,16 @@ const typeDefs = gql`
     type Like{
         id: ID!
         creator: User!,
-        video: ID!,
+        post: ID!,
     },
     type Comment{
         id: ID!,
         createdAt: String!,
         creator: User!,
         content: String!,
-        video: ID!,
+        post: ID!,
     },
-    type Video{
+    type Post{
         id: ID!,
         creator: User!,
         user: String!,
@@ -35,11 +35,11 @@ const typeDefs = gql`
     },
     
     type Query{
-        getVideos: [Video!],
-        getUserVideo(email: String!): [Video!],
+        getPosts: [Post!],
+        getUserPosts(email: String!): [Post!],
         getUser(email: String!): User!,
-        getVideoComments(video: ID!): [Comment!],
-        getVideoLikers(video: ID!): [Like!],
+        getPostComments(post: ID!): [Comment!],
+        getPostLikers(post: ID!): [Like!],
     },
 
 
@@ -48,11 +48,11 @@ const typeDefs = gql`
         login(email: String!, password: String!): User!,
         updateUser(name: String!, bio: String!, profile: String!, email: String!, password: String!): User!,
 
-        createVideo(content: String!, description: String!): Video!,
-        deleteVideo(id: ID!): String!,
+        createPost(content: String!, description: String!): Post!,
+        deletePost(id: ID!): String!,
 
-        likeVideo(video: ID!): Like!,
-        commentVideo(video: ID!, content: String!): Comment!,
+        likePost(post: ID!): Like!,
+        commentPost(post: ID!, content: String!): Comment!,
         deleteComment(comment: ID!): String!,
     }
 
