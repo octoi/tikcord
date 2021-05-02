@@ -1,5 +1,6 @@
 import styles from '../../../styles/Post.module.css';
 import useAuthContext from '../../../context/contextHook';
+import Utils from './Utils';
 import { Image, Avatar, Text, Button } from '@chakra-ui/react';
 
 export default function Post({ post }) {
@@ -22,7 +23,11 @@ export default function Post({ post }) {
             </div>
 
             <Image className={styles.image} src={post.content} alt={post.description} />
-            <p>{post.description}</p>
+            <div className={styles.utils}>
+                <Text fontSize="xl">{post.description}</Text>
+                <Utils post={post} />
+            </div>
+
         </div>
     );
 }
