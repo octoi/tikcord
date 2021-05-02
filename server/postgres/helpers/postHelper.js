@@ -79,7 +79,7 @@ module.exports = {
         });
     },
 
-    likeAPost: ({ creator, video: post }) => {
+    likeAPost: ({ creator, post }) => {
         return new Promise((resolve, reject) => {
 
             pool.query(`SELECT * FROM ${likeTable} WHERE post = $1 AND creator = $2`, [post, creator]).then(({ rows: data }) => {
