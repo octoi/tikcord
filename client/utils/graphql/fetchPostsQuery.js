@@ -9,6 +9,7 @@ const fetchPosts = gql`
             creator{
                 name
                 email
+                profile
             }
             likeCount
             commentCount
