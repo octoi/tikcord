@@ -37,7 +37,7 @@ export default function App() {
             <div className={styles.grid}>
                 <Sidebar />
                 <Feed posts={posts} loading={loading} />
-                <Users />
+                <Users posts={posts} />
             </div>
 
         </section>
