@@ -35,7 +35,7 @@ export default function Register() {
     const submitForm = (event) => {
         event.preventDefault();
 
-        if (registerUser.password < 6) {
+        if (registerUser.password.length < 6) {
             setFeedbackAlert({ visibility: true, title: 'Password must be at least 6 characters !' })
             return;
         }
