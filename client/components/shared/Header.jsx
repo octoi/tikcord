@@ -1,15 +1,22 @@
 import styles from '../../styles/Header.module.css';
 import useAuthContext from '../../context/contextHook';
+import cookie from 'js-cookie';
 import NewPost from '../app/NewPost';
 
 import { Avatar, Button, Stack, Menu, MenuList, MenuButton, MenuItem, useDisclosure } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 export default function Header() {
-    const { user } = useAuthContext();
+    const { user, setUser } = useAuthContext();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const router = useRouter();
+
+    const logout = () => {
+        cookie.remove("token");
+        setUser({})
+        router.push("/account/login")
+    }
 
     return (
         <div className={styles.container}>
@@ -25,6 +32,7 @@ export default function Header() {
                             <MenuItem onClick={() => router.push("/app/profile")} minH="48px">Profile</MenuItem>
                             <MenuItem onClick={() => router.push("/app/settings")} minH="48px">Settings</MenuItem>
                             <MenuItem onClick={onOpen} color="teal.400" minH="48px">Create</MenuItem>
+                            <MenuItem onClick={logout} color="red.400" minH="48px">Logout</MenuItem>
                         </MenuList>
                         <NewPost isOpen={isOpen} onClose={onClose} />
                     </Menu>
