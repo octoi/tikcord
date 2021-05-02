@@ -24,7 +24,7 @@ export default function NewPost({ isOpen, onClose }) {
     const fileInput = useRef();
 
     useEffect(() => {
-        if (post.post.length > 0) setLoader(false);
+        if (post?.post?.length > 0) setLoader(false);
     }, [post])
 
     const [CreatePost] = useMutation(CREATE_POST_QUERY, {
@@ -53,7 +53,9 @@ export default function NewPost({ isOpen, onClose }) {
 
             var reader = new FileReader();
 
-            reader.onloadend = () => setPost({ ...post, post: reader.result, fileName: file.name });
+            reader.onloadend = (event) => {
+                setPost({ ...post, post: event.target.result.split(",").pop(), fileName: file.name });
+            }
 
             if (file) reader.readAsDataURL(file);
         });
@@ -66,8 +68,21 @@ export default function NewPost({ isOpen, onClose }) {
         }
 
         setLoader(true);
-        uploadImage(post.post);
-        // CreatePost();
+
+        uploadImage(post.post).then(imgUrl => {
+
+            setPost({ ...post, post: imgUrl });
+            CreatePost();
+
+        }).catch(() => {
+
+            alert("Oops something went wrong !!");
+
+            setPost({})
+            setLoader(false);
+            onClose();
+
+        })
 
     }
 
