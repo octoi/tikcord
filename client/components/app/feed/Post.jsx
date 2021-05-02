@@ -15,11 +15,10 @@ export default function Post({ post }) {
                         <Text style={{ color: "#CBD5E0" }} fontSize="lg">{post.creator.email}</Text>
                     </div>
                 </div>
-                {user?.email == post.creator.email ? (
-                    <Button variant="outline" colorScheme="twitter">DELETE</Button>
-                ) : (
+                <div>
                     <Button variant="outline" colorScheme="twitter">VIEW</Button>
-                )}
+                    {user.email === post.creator.email && (<Button style={{ marginLeft: "10px" }} variant="solid" colorScheme="twitter">DELETE</Button>)}
+                </div>
             </div>
 
             <Image className={styles.image} src={post.content} alt={post.description} />
