@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
 import CREATE_POST_QUERY from '../../utils/graphql/createPostQuery';
+import uploadImage from '../../utils/api/imageUploader';
+import { useState, useEffect, useRef } from 'react';
 import { useMutation } from '@apollo/client';
 import {
     Button,
@@ -65,7 +66,8 @@ export default function NewPost({ isOpen, onClose }) {
         }
 
         setLoader(true);
-        CreatePost();
+        uploadImage(post.post);
+        // CreatePost();
 
     }
 
