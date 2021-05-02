@@ -13,7 +13,13 @@ const fetchPosts = gql`
             }
             likeCount
             commentCount
-            likes
+            likes{
+                creator{
+                    email
+                    name
+                    profile
+                }
+            }
         }
     }
 `
