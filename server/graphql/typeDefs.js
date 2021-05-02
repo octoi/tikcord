@@ -22,6 +22,7 @@ const typeDefs = gql`
         createdAt: String!,
         likeCount: Int!,
         commentCount: Int!,
+        likes: [Like!],
     },
 
     type User{
