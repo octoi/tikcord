@@ -13,6 +13,7 @@ const fetchPosts = gql`
             }
             likeCount
             commentCount
+            likes
         }
     }
 `
