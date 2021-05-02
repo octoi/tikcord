@@ -1,13 +1,17 @@
 const userResolvers = require("./user");
 const postResolvers = require("./post");
 
-const { getCommentCount, getLikeCount } = require("../utils/getPostUtils");
+const { getCommentCount, getLikes } = require("../utils/getPostUtils");
 
 module.exports = {
     Post: {
-        likeCount: getLikeCount,
+        likeCount: async (parent) => {
+            const likes = await getLikes(parent.id);
+            return likes.length;
+        },
         commentCount: getCommentCount,
         createdAt: (parent) => parent.createdat,
+        likes: getLikes,
     },
     Query: {
         ...userResolvers.Query,
