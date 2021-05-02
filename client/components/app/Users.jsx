@@ -1,4 +1,5 @@
 import User from './users/User';
+import styles from '../../styles/App.module.css';
 import { useState, useEffect } from 'react';
 import { Text } from '@chakra-ui/react';
 
@@ -30,7 +31,7 @@ export default function Users({ posts }) {
     }, [posts])
 
     return (
-        <section style={{ margin: "10px 100px" }}>
+        <section className={styles.posts}>
             <Text fontSize="2xl">Users</Text>
             {users && users.map((user, idx) => (
                 <User key={idx} user={user} />

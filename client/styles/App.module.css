@@ -19,3 +19,15 @@
     flex-direction: column;
     justify-content: flex-start;
 }
+
+/* hiding on break points */
+
+.posts {
+    margin: 10px 100px;
+}
+
+@media only screen and (max-width: 1466px){
+   .posts {
+       display: none;
+   } 
+}
