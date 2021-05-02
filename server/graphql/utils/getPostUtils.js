@@ -1,8 +1,8 @@
 const { getPostLikes, getPostComments } = require("../../postgres/helper")
 
 module.exports = {
-    getLikes: async (parent) => {
-        const likes = await getPostLikes(parent.id);
+    getLikes: async (id) => {
+        const likes = await getPostLikes(id);
         return likes.rows;
     },
 
