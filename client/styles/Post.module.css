@@ -11,10 +11,16 @@
     margin-top: 20px;
 }
 
+.topper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 15px;
+}
+
 .profile {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-left: 10px;
 }
 
