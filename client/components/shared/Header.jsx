@@ -13,9 +13,12 @@ export default function Header() {
     const router = useRouter();
 
     const logout = () => {
-        cookie.remove("token");
-        setUser({})
-        router.push("/account/login")
+        const permission = confirm("Are you sure ?")
+        if (permission) {
+            cookie.remove("token");
+            setUser({})
+            router.push("/account/login")
+        }
     }
 
     return (
