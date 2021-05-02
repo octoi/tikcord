@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 const likePostQuery = gql`
     mutation likePost(
-        $post: String!
+        $post: ID!
     ){
         likePost(
             post: $post
