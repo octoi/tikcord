@@ -22,12 +22,28 @@
 
 /* hiding on break points */
 
+/* ! I had done everything i could for css */
+/* ? css bugs are very annoying , I'm sorry for that */
+
 .posts {
     margin: 10px 100px;
 }
 
 @media only screen and (max-width: 1466px){
+   .sidebar {
+       display: none;
+   }
+
+   .posts{
+       margin: 10px 50px;
+   }
+
+   .feedContainer{
+       margin-left: 0;
+   }
+}
+@media only screen and (max-width: 1023px){
    .posts {
        display: none;
-   } 
+   }
 }
