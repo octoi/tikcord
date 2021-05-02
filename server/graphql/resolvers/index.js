@@ -11,7 +11,10 @@ module.exports = {
         },
         commentCount: getCommentCount,
         createdAt: (parent) => parent.createdat,
-        likes: getLikes,
+        likes: async (parent) => {
+            const likes = await getLikes(parent.id);
+            return likes;
+        },
     },
     Query: {
         ...userResolvers.Query,
