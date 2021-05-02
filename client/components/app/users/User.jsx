@@ -2,7 +2,7 @@ import { Text, Avatar } from '@chakra-ui/react';
 
 export default function User({ user }) {
     return (
-        <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
+        <div style={{ display: "flex", marginTop: "10px", alignItems: "center" }}>
             <Avatar src={user.profile} name={user.name} />
             <div style={{ marginLeft: "10px" }}>
                 <Text fontSize="lg">{user.name}</Text>
