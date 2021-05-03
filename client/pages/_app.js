@@ -3,6 +3,7 @@ import cookie from 'js-cookie';
 import Header from '../components/shared/Header';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { AppContext } from '../context/AppContext';
+import { SharedContext } from '../context/SharedContext';
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from 'apollo-link-context';
 
@@ -35,8 +36,10 @@ function MyApp({ Component, pageProps }) {
         <ChakraProvider theme={theme}>
             <ApolloProvider client={client}>
                 <AppContext>
-                    <Header />
-                    <Component {...pageProps} />
+                    <SharedContext>
+                        <Header />
+                        <Component {...pageProps} />
+                    </SharedContext>
                 </AppContext>
             </ApolloProvider>
         </ChakraProvider>
