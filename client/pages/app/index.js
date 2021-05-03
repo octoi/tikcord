@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import useAuthContext from '../../context/contextHook';
-import useSharedContext from '../../context/sharedContextHook';
 import styles from '../../styles/App.module.css';
 import FETCH_POST_QUERY from '../../utils/graphql/fetchPostsQuery';
 import { useEffect, useState } from 'react';

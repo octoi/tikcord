@@ -1,6 +1,7 @@
 import CREATE_POST_QUERY from '../../utils/graphql/createPostQuery';
 import uploadImage from '../../utils/api/imageUploader';
 import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
 import { useMutation } from '@apollo/client';
 import {
     Button,
@@ -22,6 +23,7 @@ export default function NewPost({ isOpen, onClose }) {
     const [loader, setLoader] = useState(false);
 
     const fileInput = useRef();
+    const router = useRouter();
 
     useEffect(() => {
         if (post?.post?.length > 0) setLoader(false);
@@ -31,7 +33,8 @@ export default function NewPost({ isOpen, onClose }) {
         variables: { content: post.post, description: post.description },
         update() {
             setLoader(false);
-            setPost({ post: '', description: '', fileName: 'Select a file' })
+            setPost({ post: '', description: '', fileName: 'Select a file' });
+            router.reload(window.location.pathname)
             onClose();
         },
         onError() {
