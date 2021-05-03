@@ -13,7 +13,7 @@ import Feed from '../../components/app/Feed';
 import Users from '../../components/app/Users';
 
 export default function App() {
-    const { user, setUser } = useAuthContext();
+    const { user } = useAuthContext();
     const [posts, setPosts] = useState([]);
     const router = useRouter();
 
