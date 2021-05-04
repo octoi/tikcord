@@ -52,7 +52,7 @@ export default function Utils({ post: postData }) {
                 colorScheme="cyan"
             ><AnnotationIcon width={15} style={{ marginRight: "5" }} />{post.commentCount}
             </Button>
-            <Comment isOpen={isOpen} postComments={post?.comments} onClose={onClose} />
+            <Comment isOpen={isOpen} post={post} onClose={onClose} />
         </Stack>
     );
 }
