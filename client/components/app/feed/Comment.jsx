@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
     Button,
     Input,
@@ -15,6 +16,8 @@ import {
 
 
 export default function Comment({ isOpen, onClose, postComments }) {
+    const [comment, setComment] = useState("");
+
     return (
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
             <ModalOverlay />
@@ -24,6 +27,8 @@ export default function Comment({ isOpen, onClose, postComments }) {
                 <ModalBody>
                     <Input
                         placeholder="What's in your mind ??"
+                        value={comment}
+                        onChange={(event) => setComment(event.target.value)}
                     />
                     <Button width="100%" mt={5}>Comment</Button>
                 </ModalBody>
