@@ -2,29 +2,29 @@ const client = require("./index");
 
 module.exports = {
 
-    getVideosFromCache: () => {
+    getPostsFromCache: () => {
         return new Promise((resolve, reject) => {
-            client.lrange("videos", 0, -1, (err, reply) => {
+            client.lrange("posts", 0, -1, (err, reply) => {
                 if (err) {
                     console.log(err.message);
                     reject();
                 } else {
-                    const videos = [];
+                    const posts = [];
 
-                    reply.forEach(video => {
-                        video = JSON.parse(video);
-                        videos.push(video);
+                    reply.forEach(post => {
+                        post = JSON.parse(post);
+                        posts.push(post);
                     });
 
-                    resolve(videos);
+                    resolve(posts);
                 }
             });
         });
     },
 
-    addVideoToCache: (data) => {
+    addPostToCache: (data) => {
         return new Promise((resolve, reject) => {
-            client.lpush("videos", JSON.stringify(data), (err, reply) => {
+            client.lpush("posts", JSON.stringify(data), (err, reply) => {
                 if (err) {
                     console.log(err.message);
                     reject();
@@ -38,16 +38,16 @@ module.exports = {
     deleteAPost: (id) => {
         return new Promise((resolve, reject) => {
 
-            module.exports.getVideosFromCache().then(posts => {
+            module.exports.getPostsFromCache().then(posts => {
 
                 posts = posts.filter(post => post.id != id)
-                client.DEL("videos", (err) => {
+                client.DEL("posts", (err) => {
                     if (err) {
                         console.log(err.message)
                         reject();
                     } else {
                         posts.forEach(async post => {
-                            await module.exports.addVideoToCache(post);
+                            await module.exports.addPostToCache(post);
                         });
 
                         resolve();
