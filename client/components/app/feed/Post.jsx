@@ -1,11 +1,34 @@
 import styles from '../../../styles/Post.module.css';
 import useAuthContext from '../../../context/contextHook';
 import Utils from './Utils';
+import DELETE_POST_QUERY from '../../../utils/graphql/deletePostQuery';
+import { useRouter } from 'next/router';
+import { useMutation } from '@apollo/client';
 import { Image, Avatar, Text, Button } from '@chakra-ui/react';
 
 export default function Post({ post }) {
     const { user } = useAuthContext();
     const { display_url: postContent } = JSON.parse(post.content);
+
+    const router = useRouter();
+
+    const [DeletePostFromServer] = useMutation(DELETE_POST_QUERY, {
+        variables: { id: post.id },
+        onError: (err) => {
+            console.log(err);
+            alert("Oops something went wrong !")
+        },
+        update: () => {
+            router.reload(window.location.pathname);
+        }
+    })
+
+    const deletePost = () => {
+        const permission = confirm("Are you sure ??");
+        if (!permission) return;
+
+        DeletePostFromServer();
+    }
 
     return (
         <div className={styles.container}>
@@ -19,7 +42,7 @@ export default function Post({ post }) {
                 </div>
                 <div>
                     <Button variant="outline" colorScheme="twitter">VIEW</Button>
-                    {user.email === post.creator.email && (<Button style={{ marginLeft: "10px" }} variant="solid" colorScheme="twitter">DELETE</Button>)}
+                    {user.email === post.creator.email && (<Button style={{ marginLeft: "10px" }} variant="solid" onClick={deletePost} colorScheme="twitter">DELETE</Button>)}
                 </div>
             </div>
 
