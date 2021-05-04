@@ -27,9 +27,11 @@ export default function Comment({ isOpen, onClose, post }) {
     const [CommentPost] = useMutation(COMMENT_POST_QUERY, {
         variables: { content: comment, post: post.id },
         update: () => {
-            let newComment = { creator: JSON.stringify(user), content: comment };
-            const comments = postData.comments;
-            comments.push(newComment);
+            let newComment = { content: comment, creator: JSON.stringify(user) };
+
+            const comments = [...postData.comments];
+            comments.push(newComment)
+
             setPostData({ ...postData, comments })
         },
         onError: (err) => {
@@ -58,6 +60,9 @@ export default function Comment({ isOpen, onClose, post }) {
                         onChange={(event) => setComment(event.target.value)}
                     />
                     <Button onClick={commentPost} width="100%" mt={5}>Comment</Button>
+                    {postData?.comments.map((comment, id) => (
+                        <p key={id}>{comment.content}</p>
+                    ))}
                 </ModalBody>
             </ModalContent>
         </Modal>
