@@ -1,7 +1,6 @@
 import {
     Button,
     Input,
-    Textarea,
     Progress,
     VisuallyHidden,
     Modal,
@@ -23,6 +22,10 @@ export default function Comment({ isOpen, onClose, postComments }) {
                 <ModalHeader>Comment</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
+                    <Input
+                        placeholder="What's in your mind ??"
+                    />
+                    <Button width="100%" mt={5}>Comment</Button>
                 </ModalBody>
             </ModalContent>
         </Modal>
