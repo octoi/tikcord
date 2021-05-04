@@ -20,7 +20,7 @@ module.exports = {
         },
         comments: async (parent) => {
             const comments = await getComments(parent.id);
-            return comments;
+            return comments.reverse();
         }
     },
     Query: {
