@@ -6,8 +6,8 @@ module.exports = {
         return likes.rows;
     },
 
-    getCommentCount: async (parent) => {
-        const comments = await getPostComments(parent.id);
-        return comments.rows.length;
+    getComments: async (id) => {
+        const comments = await getPostComments(id);
+        return comments.rows;
     }
 }
