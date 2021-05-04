@@ -8,7 +8,7 @@ export default function Feed({ posts, loading }) {
         <section className={styles.feedContainer}>
             <div className={styles.feedSubContainer}>
                 <Text fontSize="2xl">Your Feed</Text>
-                {!posts && <NoPosts />}
+                {posts?.length === 0 && <NoPosts />}
                 <AllPosts posts={posts} loading={loading} />
             </div>
         </section>
