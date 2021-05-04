@@ -40,7 +40,6 @@ export default function Post({ post }) {
                     </div>
                 </div>
                 <div>
-                    <Button variant="outline" colorScheme="twitter">VIEW</Button>
                     {user.email === post.creator.email && (<Button style={{ marginLeft: "10px" }} variant="solid" onClick={deletePost} colorScheme="twitter">DELETE</Button>)}
                 </div>
             </div>
