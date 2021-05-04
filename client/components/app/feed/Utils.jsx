@@ -1,13 +1,15 @@
 import useAuthContext from '../../../context/contextHook';
 import LIKE_POST_QUERY from '../../../utils/graphql/likePostQuery';
+import Comment from './Comment';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useMutation } from '@apollo/client';
-import { Stack, Button } from '@chakra-ui/react';
+import { Stack, Button, useDisclosure } from '@chakra-ui/react';
 import { HeartIcon as OutlinedHeart, AnnotationIcon } from '@heroicons/react/outline';
 
 export default function Utils({ post: postData }) {
     const { user } = useAuthContext();
+    const { isOpen, onClose, onOpen } = useDisclosure();
     const [userLiked, setUserLiked] = useState(false);
     const [post, setPost] = useState(postData);
     const router = useRouter();
@@ -35,9 +37,6 @@ export default function Utils({ post: postData }) {
         LikePost();
     }
 
-    const comment = () => {
-        router.push(`/app/post/${post.id}`)
-    }
 
     return (
         <Stack direction="row" marginTop={5} spacing={4}>
@@ -48,11 +47,12 @@ export default function Utils({ post: postData }) {
             ><OutlinedHeart width={15} style={{ marginRight: "5" }} />{post.likeCount}
             </Button>
             <Button
-                onClick={comment}
+                onClick={onOpen}
                 variant="outline"
                 colorScheme="cyan"
             ><AnnotationIcon width={15} style={{ marginRight: "5" }} />{post.commentCount}
             </Button>
+            <Comment isOpen={isOpen} postComments={post?.comments} onClose={onClose} />
         </Stack>
     );
 }
