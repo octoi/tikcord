@@ -5,10 +5,10 @@ module.exports = {
     getVideosFromCache: () => {
         return new Promise((resolve, reject) => {
             client.lrange("videos", 0, -1, (err, reply) => {
-                if(err){
+                if (err) {
                     console.log(err.message);
                     reject();
-                }else{
+                } else {
                     const videos = [];
 
                     reply.forEach(video => {
@@ -25,14 +25,38 @@ module.exports = {
     addVideoToCache: (data) => {
         return new Promise((resolve, reject) => {
             client.lpush("videos", JSON.stringify(data), (err, reply) => {
-                if(err){
+                if (err) {
                     console.log(err.message);
                     reject();
-                }else{
+                } else {
                     resolve(reply);
                 }
             });
         });
     },
-    
+
+    deleteAPost: (id) => {
+        return new Promise((resolve, reject) => {
+
+            module.exports.getVideosFromCache().then(posts => {
+
+                posts = posts.filter(post => post.id != id)
+                client.DEL("videos", (err) => {
+                    if (err) {
+                        console.log(err.message)
+                        reject();
+                    } else {
+                        posts.forEach(async post => {
+                            await module.exports.addVideoToCache(post);
+                        });
+
+                        resolve();
+                    }
+                })
+
+            })
+
+        });
+    }
+
 }
