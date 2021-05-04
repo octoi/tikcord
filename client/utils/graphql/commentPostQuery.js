@@ -6,6 +6,8 @@ const commentPostQuery = gql`
         $post: ID!,
     ){
         commentPost(content: $content, post: $post){
+            id
+            creator
             content
         }
     }
