@@ -4,7 +4,7 @@ const deletePostQuery = gql`
     mutation deletePost(
         $id: ID!,
     ){
-        deletePost(id: $ID)
+        deletePost(id: $id)
     }
 `
 
