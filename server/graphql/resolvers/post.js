@@ -11,8 +11,9 @@ const {
     getPostLikes
 } = require("../../postgres/helper");
 const {
-    getVideosFromCache: getPostsFromCache,
-    addVideoToCache: addPostToCache
+    getPostsFromCache: getPostsFromCache,
+    addPostToCache: addPostToCache,
+    deleteAPost: deleteAPostFromCache
 } = require("../../redis/helper");
 
 const Mutation = {
@@ -41,6 +42,8 @@ const Mutation = {
 
     deletePost: async (_, { id }, context) => {
         const user = checkAuth(context);
+
+        await deleteAPostFromCache(id);
 
         await deleteUserPost(id, user);
 
