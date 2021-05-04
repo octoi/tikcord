@@ -16,6 +16,11 @@ const fetchPosts = gql`
             likes{
                 creator
             }
+            comments{
+                id
+                content
+                creator
+            }
         }
     }
 `
