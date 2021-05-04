@@ -1,8 +1,11 @@
 import gql from 'graphql-tag';
 
 const commentPostQuery = gql`
-    mutation commentPost($content: String!){
-        commentPost(content: $content){
+    mutation commentPost(
+        $content: String!,
+        $post: ID!,
+    ){
+        commentPost(content: $content, post: $post){
             content
         }
     }
