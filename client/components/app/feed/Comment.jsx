@@ -21,6 +21,7 @@ import {
 export default function Comment({ isOpen, onClose, post }) {
     const [comment, setComment] = useState("");
     const [postData, setPostData] = useState(post);
+    const [loader, setLoader] = useState(false);
 
     const { user } = useAuthContext();
 
@@ -32,7 +33,9 @@ export default function Comment({ isOpen, onClose, post }) {
             const comments = [...postData.comments];
             comments.push(newComment)
 
-            setPostData({ ...postData, comments })
+            setPostData({ ...postData, comments });
+            setComment("");
+            setLoader(false);
         },
         onError: (err) => {
             console.log(err.message);
@@ -44,6 +47,8 @@ export default function Comment({ isOpen, onClose, post }) {
             alert("Can you please comment ...");
             return;
         }
+
+        setLoader(true)
         CommentPost();
     }
 
@@ -54,6 +59,7 @@ export default function Comment({ isOpen, onClose, post }) {
                 <ModalHeader>Comment</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
+                    <Progress visibility={true} colorScheme="twitter" mb={5} size="xs" isIndeterminate style={{ display: `${loader ? "block" : "none"}` }} />
                     <Input
                         placeholder="What's in your mind ??"
                         value={comment}
