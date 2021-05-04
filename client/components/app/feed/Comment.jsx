@@ -1,5 +1,6 @@
 import useAuthContext from '../../../context/contextHook';
 import COMMENT_POST_QUERY from '../../../utils/graphql/commentPostQuery';
+import DELETE_COMMENT_QUERY from '../../../utils/graphql/deleteCommentQuery';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
@@ -23,6 +24,7 @@ import {
 
 export default function Comment({ isOpen, onClose, post }) {
     const [comment, setComment] = useState("");
+    const [commentId, setCommentId] = useState("");
     const [postData, setPostData] = useState(post);
     const [loader, setLoader] = useState(false);
 
@@ -45,6 +47,20 @@ export default function Comment({ isOpen, onClose, post }) {
         onError: (err) => {
             console.log(err.message);
         }
+    });
+
+    const [DeleteComment] = useMutation(DELETE_COMMENT_QUERY, {
+        variables: { comment: commentId },
+        update: () => {
+            let comments = [...postData.comments];
+            comments = comments.filter(comment => comment.id !== commentId);
+
+            setPostData({ ...postData, comments })
+
+        },
+        onError: (err) => {
+            console.log(err.message);
+        }
     })
 
     const commentPost = () => {
@@ -57,8 +73,12 @@ export default function Comment({ isOpen, onClose, post }) {
         CommentPost();
     }
 
-    const deleteComment = () => {
+    const deleteComment = (id) => {
+        const permission = confirm("are you sure ??");
+        if (!permission) return;
 
+        setCommentId(id)
+        DeleteComment();
     }
 
 
