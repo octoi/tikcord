@@ -2,6 +2,7 @@ import useAuthContext from '../../../context/contextHook';
 import COMMENT_POST_QUERY from '../../../utils/graphql/commentPostQuery';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
+import { useRouter } from 'next/router';
 import {
     Button,
     Input,
@@ -14,6 +15,8 @@ import {
     ModalFooter,
     ModalBody,
     ModalContent,
+    Avatar,
+    Text
 } from '@chakra-ui/react';
 
 
@@ -24,6 +27,7 @@ export default function Comment({ isOpen, onClose, post }) {
     const [loader, setLoader] = useState(false);
 
     const { user } = useAuthContext();
+    const router = useRouter();
 
     const [CommentPost] = useMutation(COMMENT_POST_QUERY, {
         variables: { content: comment, post: post.id },
@@ -31,6 +35,7 @@ export default function Comment({ isOpen, onClose, post }) {
             let newComment = { content: comment, creator: JSON.stringify(user) };
 
             const comments = [...postData.comments];
+            comments.reverse();
             comments.push(newComment)
 
             setPostData({ ...postData, comments });
@@ -52,6 +57,12 @@ export default function Comment({ isOpen, onClose, post }) {
         CommentPost();
     }
 
+    const deleteComment = () => {
+
+    }
+
+
+
     return (
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
             <ModalOverlay />
@@ -65,10 +76,32 @@ export default function Comment({ isOpen, onClose, post }) {
                         value={comment}
                         onChange={(event) => setComment(event.target.value)}
                     />
-                    <Button onClick={commentPost} width="100%" mt={5}>Comment</Button>
-                    {postData?.comments.map((comment, id) => (
-                        <p key={id}>{comment.content}</p>
-                    ))}
+                    <Button onClick={commentPost} width="100%" mt={5} mb={5}>Comment</Button>
+                    {postData?.comments.map((comment, id) => {
+                        const creator = JSON.parse(comment.creator);
+                        return (
+                            <div style={{ marginTop: "15px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                                <div style={{ display: "flex" }}>
+                                    <Avatar src={creator.profile} name={creator.name} mr={2} />
+                                    <div>
+                                        <Text fontSize="sm" color="gray.500">{creator.name}</Text>
+                                        <Text>{comment.content}</Text>
+                                    </div>
+                                </div>
+                                {user.email === creator.email && (
+                                    <Button
+                                        size="sm"
+                                        variant="outline"
+                                        onClick={() => {
+                                            !comment.id
+                                                ? router.reload(window.location.pathname)
+                                                : deleteComment(comment.id);
+                                        }}
+                                    >{!comment.id ? "R" : "DELETE"}</Button>
+                                )}
+                            </div>
+                        );
+                    })}
                 </ModalBody>
             </ModalContent>
         </Modal>
