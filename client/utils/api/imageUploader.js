@@ -15,8 +15,7 @@ export default function uploadImage(imageData) {
             data: body
         }).then(data => {
             const urlPath = data?.data?.data;
-            const urls = { delete_url: urlPath.delete_url, display_url: urlPath.display_url }
-            resolve(JSON.stringify(urls));
+            resolve(urlPath.display_url);
         }).catch(err => {
             console.log(err)
             reject();

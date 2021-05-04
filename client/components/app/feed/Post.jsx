@@ -8,7 +8,6 @@ import { Image, Avatar, Text, Button } from '@chakra-ui/react';
 
 export default function Post({ post }) {
     const { user } = useAuthContext();
-    const { display_url: postContent } = JSON.parse(post.content);
 
     const router = useRouter();
 
@@ -46,7 +45,7 @@ export default function Post({ post }) {
                 </div>
             </div>
 
-            <Image className={styles.image} src={postContent} alt={post.description} />
+            <Image className={styles.image} src={post.content} alt={post.description} />
             <div className={styles.utils}>
                 <Text fontSize="xl">{post.description}</Text>
                 <Utils post={post} />
