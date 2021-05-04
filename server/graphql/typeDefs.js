@@ -18,6 +18,12 @@ const typeDefs = gql`
         creator: String!,
         post: ID!,
     },
+    type PostComment{
+        id: ID!,
+        post: ID!,
+        creator: String!,
+        content: String!,
+    },
     type Post{
         id: ID!,
         creator: User!,
@@ -28,6 +34,7 @@ const typeDefs = gql`
         likeCount: Int!,
         commentCount: Int!,
         likes: [PostLike!],
+        comments: [PostComment!],
     },
 
     type User{
