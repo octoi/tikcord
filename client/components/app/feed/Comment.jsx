@@ -1,3 +1,4 @@
+import useAuthContext from '../../../context/contextHook';
 import COMMENT_POST_QUERY from '../../../utils/graphql/commentPostQuery';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
@@ -19,11 +20,17 @@ import {
 
 export default function Comment({ isOpen, onClose, post }) {
     const [comment, setComment] = useState("");
+    const [postData, setPostData] = useState(post);
+
+    const { user } = useAuthContext();
 
     const [CommentPost] = useMutation(COMMENT_POST_QUERY, {
         variables: { content: comment, post: post.id },
         update: () => {
-            alert("created comment")
+            let newComment = { creator: JSON.stringify(user), content: comment };
+            const comments = postData.comments;
+            comments.push(newComment);
+            setPostData({ ...postData, comments })
         },
         onError: (err) => {
             console.log(err.message);
