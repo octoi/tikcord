@@ -8,12 +8,10 @@ import {
     Button,
     Input,
     Progress,
-    VisuallyHidden,
     Modal,
     ModalOverlay,
     ModalHeader,
     ModalCloseButton,
-    ModalFooter,
     ModalBody,
     ModalContent,
     Avatar,
@@ -100,7 +98,7 @@ export default function Comment({ isOpen, onClose, post }) {
                     {postData?.comments.map((comment, id) => {
                         const creator = JSON.parse(comment.creator);
                         return (
-                            <div style={{ marginTop: "15px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                            <div style={{ marginTop: "15px", marginBottom: "15px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                                 <div style={{ display: "flex" }}>
                                     <Avatar src={creator.profile} name={creator.name} mr={2} />
                                     <div>
