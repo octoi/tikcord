@@ -32,7 +32,8 @@ export default function Profile() {
                     <Spinner />
                 </Center>
             )}
-            {!data && (
+
+            {!loading && !data && (
                 <Center mt={20} display="flex" flexDirection="column">
                     <Text fontSize="4xl">Seems Like There Is No Such User</Text>
                     <Button mt={5} variant="outline" onClick={() => router.push("/app")}>Return To Home</Button>
@@ -50,6 +51,13 @@ export default function Profile() {
                     )}
                 </Center>
             )}
+
+            {data && data.getUserPosts.length === 0 && (
+                <Center mt={20} display="flex" flexDirection="column">
+                    <Text fontSize="xl">No Posts Yet</Text>
+                </Center>
+            )}
+
         </section>
     );
 
