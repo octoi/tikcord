@@ -1,9 +1,8 @@
 const { AuthenticationError } = require("apollo-server-errors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { registerUser, updateUserData } = require("../../postgres/helper");
+const { registerUser } = require("../../postgres/helper");
 const { checkUserExists } = require("../../postgres/utils/check");
-const checkAuth = require("../utils/checkAuth");
 
 const generateToken = (user) => {
     return jwt.sign({
