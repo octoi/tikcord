@@ -21,7 +21,9 @@ const fetchUserQuery = gql`
             }
             commentCount
             comments{
+                id
                 creator
+                content
             }
         }
     }
