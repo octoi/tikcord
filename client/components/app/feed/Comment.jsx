@@ -1,4 +1,5 @@
 import useAuthContext from '../../../context/contextHook';
+import Link from 'next/link';
 import COMMENT_POST_QUERY from '../../../utils/graphql/commentPostQuery';
 import DELETE_COMMENT_QUERY from '../../../utils/graphql/deleteCommentQuery';
 import { useState } from 'react';
@@ -100,7 +101,9 @@ export default function Comment({ isOpen, onClose, post }) {
                         return (
                             <div style={{ marginTop: "15px", marginBottom: "15px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                                 <div style={{ display: "flex" }}>
-                                    <Avatar src={creator.profile} name={creator.name} mr={2} />
+                                    <Link href={`/account/${creator.email}`}>
+                                        <Avatar src={creator.profile} name={creator.name} mr={2} />
+                                    </Link>
                                     <div>
                                         <Text fontSize="sm" color="gray.500">{creator.name}</Text>
                                         <Text>{comment.content}</Text>
