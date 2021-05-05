@@ -32,7 +32,7 @@ export default function Header() {
                         </MenuButton>
                         <MenuList>
                             <MenuItem onClick={() => router.push("/app")} minH="48px">Home</MenuItem>
-                            <MenuItem onClick={() => router.push("/app/profile")} minH="48px">Profile</MenuItem>
+                            <MenuItem onClick={() => router.push(`/account/${user.email}`)} minH="48px">Profile</MenuItem>
                             <MenuItem onClick={() => router.push("/app/settings")} minH="48px">Settings</MenuItem>
                             <MenuItem onClick={onOpen} color="teal.400" minH="48px">Create</MenuItem>
                             <MenuItem onClick={logout} color="red.400" minH="48px">Logout</MenuItem>
