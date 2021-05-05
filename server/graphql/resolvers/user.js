@@ -20,7 +20,7 @@ const Mutation = {
     register: async (_, { name, email, password, bio, profile }) => {
         password = await bcrypt.hash(password, 10);
         const registerData = await registerUser(name, email, password, bio, profile);
-        
+
         const token = generateToken(registerData);
         return { ...registerData, token };
     },
@@ -29,26 +29,14 @@ const Mutation = {
         const data = await checkUserExists(email);
         const userData = data.rows[0]
 
-        if(!userData) return undefined;
+        if (!userData) return undefined;
 
         const result = await bcrypt.compare(password, userData.password);
-        if(!result) throw new AuthenticationError("Authentication error");
+        if (!result) throw new AuthenticationError("Authentication error");
 
         const token = generateToken(userData);
         return { ...userData, token }
     },
-
-    updateUser: async (_, { name, bio, profile, email, password }, context) => {
-        const user = await checkAuth(context);
-
-        if(user.email != email) throw new AuthenticationError("Authentication failed");
-        
-        password = await bcrypt.hash(password, 10);
-        
-        const res = updateUserData(name, password, email, bio, profile);
-        return res;
-
-    }
 
 }
 
@@ -58,7 +46,7 @@ const Query = {
         const user = await checkUserExists(email);
         const userData = user.rows[0];
 
-        if(!userData) return undefined;
+        if (!userData) return undefined;
 
         return userData;
 
