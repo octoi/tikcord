@@ -61,7 +61,7 @@ export default function Profile() {
             {data && data.getUserPosts && (
                 <Center mt={10} mb={10} style={{ display: "flex", flexDirection: "column" }}>
                     {data.getUserPosts.map((post, id) => {
-                        post = { ...post, creator: user }
+                        post = { ...post, creator: data.getUser }
 
                         return <PostCard key={id} post={post} />
                     })}
