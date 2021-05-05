@@ -1,5 +1,6 @@
 import useAuthContext from '../../context/contextHook';
 import FETCH_USER_QUERY from '../../utils/graphql/fetchUserQuery';
+import PostCard from '../../components/app/feed/Post';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
@@ -56,6 +57,15 @@ export default function Profile() {
                 <Center mt={20} display="flex" flexDirection="column">
                     <Text fontSize="xl">No Posts Yet</Text>
                 </Center>
+            )}
+            {data && data.getUserPosts && (
+                <div>
+                    {data.getUserPosts.map((post, id) => {
+                        post = { ...post, creator: user }
+
+                        return <PostCard key={id} post={post} />
+                    })}
+                </div>
             )}
 
         </section>
