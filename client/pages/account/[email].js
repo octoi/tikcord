@@ -46,9 +46,7 @@ export default function Profile() {
                     <Text fontSize="md" color="gray.200">{data.getUser.email}</Text>
                     <Text mt={2} fontSize="xl" color="gray.200">{data.getUser.bio}</Text>
 
-                    {data.getUser.email === user.email && (
-                        <Button variant="outline" mt={5}>Edit Profile</Button>
-                    )}
+                    <Button variant="outline" mt={5} onClick={() => router.push("/app")} >Return Home</Button>
                 </Center>
             )}
 
