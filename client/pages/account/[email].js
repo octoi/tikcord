@@ -59,13 +59,13 @@ export default function Profile() {
                 </Center>
             )}
             {data && data.getUserPosts && (
-                <div>
+                <Center mt={10} mb={10} style={{ display: "flex", flexDirection: "column" }}>
                     {data.getUserPosts.map((post, id) => {
                         post = { ...post, creator: user }
 
                         return <PostCard key={id} post={post} />
                     })}
-                </div>
+                </Center>
             )}
 
         </section>
