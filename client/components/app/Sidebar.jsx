@@ -13,7 +13,6 @@ export default function Sidebar() {
         <div className={styles.sidebar}>
             <IconButton Icon={HomeIcon} text="Home" link="/app" />
             <IconButton Icon={UserIcon} text="Profile" link={`/account/${user.email}`} mt />
-            <IconButton Icon={CogIcon} text="Settings" link="/app/settings" mt />
             <IconButton Icon={PlusCircleIcon} text="Create" mt solid onClick={onOpen} />
             <NewPost isOpen={isOpen} onClose={onClose} />
         </div>
