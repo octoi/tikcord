@@ -16,6 +16,9 @@ const fetchUserQuery = gql`
             content
             description
             likeCount
+            likes{
+                creator
+            }
             commentCount
             comments{
                 creator
