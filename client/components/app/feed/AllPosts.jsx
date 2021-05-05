@@ -1,6 +1,5 @@
 import Post from './Post';
 import Skeleton from './Skeleton';
-import { Spinner } from '@chakra-ui/react';
 
 export default function AllPosts({ posts, loading }) {
     return (
