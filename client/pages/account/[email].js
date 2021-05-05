@@ -1,7 +1,6 @@
 import useAuthContext from '../../context/contextHook';
 import FETCH_USER_QUERY from '../../utils/graphql/fetchUserQuery';
 import PostCard from '../../components/app/feed/Post';
-import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
 import {

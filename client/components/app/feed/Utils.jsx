@@ -2,7 +2,6 @@ import useAuthContext from '../../../context/contextHook';
 import LIKE_POST_QUERY from '../../../utils/graphql/likePostQuery';
 import Comment from './Comment';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { useMutation } from '@apollo/client';
 import { Stack, Button, useDisclosure } from '@chakra-ui/react';
 import { HeartIcon as OutlinedHeart, AnnotationIcon } from '@heroicons/react/outline';
@@ -12,7 +11,6 @@ export default function Utils({ post: postData }) {
     const { isOpen, onClose, onOpen } = useDisclosure();
     const [userLiked, setUserLiked] = useState(false);
     const [post, setPost] = useState(postData);
-    const router = useRouter();
 
 
     useEffect(() => {
