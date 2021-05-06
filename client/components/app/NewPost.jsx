@@ -113,7 +113,7 @@ export default function NewPost({ isOpen, onClose }) {
                 </ModalBody>
 
                 <ModalFooter>
-                    <Button colorScheme="twitter" onClick={submitForm}>Create</Button>
+                    <Button colorScheme="twitter" disabled={loader ? true : false} onClick={submitForm}>Create</Button>
                     <Button
                         ml={3}
                         onClick={() => {
