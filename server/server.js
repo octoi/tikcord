@@ -1,20 +1,25 @@
 require("dotenv").config();
 
+const connect = require("connect");
 const socket = require("socket.io");
-const httpServer = require("http").createServer();
-const { ApolloServer } = require("apollo-server");
+const { ApolloServer } = require("apollo-server-express");
 
-const redis = require("./redis");
 const typeDefs = require("./graphql/typeDefs");
 const resolvers = require("./graphql/resolvers");
 
+const app = connect();
+
 const server = new ApolloServer({ typeDefs, resolvers, context: ({ req }) => ({ req }) }); // graphql server
+server.applyMiddleware({ app });
 
-const io = socket(httpServer);
+const port = process.env.PORT || 5000;
+// server.listen(port).then(({ url }) => )
 
+const http = app.listen(port, () => {
+    console.log(`[INFO] Server started at http://localhost:8080`);
+})
+
+const io = socket(http);
 io.on("connection", () => {
     console.log("user connected")
 })
-
-const port = process.env.PORT || 5000;
-server.listen(port).then(({ url }) => console.log(`[INFO] Server started at ${url}`))
