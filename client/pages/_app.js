@@ -18,7 +18,7 @@ const theme = extendTheme({
 
 const serverUrl = process.env.SERVER_URL || 'http://localhost:8080';
 
-const httpLink = createHttpLink({ uri: serverUrl });
+const httpLink = createHttpLink({ uri: serverUrl + "/gql" });
 
 const authLink = setContext(() => {
     const token = cookie.get("token");
