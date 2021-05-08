@@ -1,6 +1,7 @@
 require("dotenv").config();
 
-const socketIo = require("socket.io");
+const socket = require("socket.io");
+const httpServer = require("http").createServer();
 const { ApolloServer } = require("apollo-server");
 
 const redis = require("./redis");
@@ -9,7 +10,7 @@ const resolvers = require("./graphql/resolvers");
 
 const server = new ApolloServer({ typeDefs, resolvers, context: ({ req }) => ({ req }) }); // graphql server
 
-const io = socketIo(server);
+const io = socket(httpServer);
 
 io.on("connection", () => {
     console.log("user connected")
