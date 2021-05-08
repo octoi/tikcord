@@ -1,6 +1,7 @@
 import '../styles/globals.css';
 import cookie from 'js-cookie';
 import Header from '../components/shared/Header';
+import io from 'socket.io-client';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { AppContext } from '../context/AppContext';
 import { SharedContext } from '../context/SharedContext';
@@ -15,7 +16,9 @@ const theme = extendTheme({
     }
 });
 
-const httpLink = createHttpLink({ uri: process.env.SERVER_URL || 'http://localhost:8080' });
+const serverUrl = process.env.SERVER_URL || 'http://localhost:8080';
+
+const httpLink = createHttpLink({ uri: serverUrl });
 
 const authLink = setContext(() => {
     const token = cookie.get("token");
@@ -32,6 +35,8 @@ const client = new ApolloClient({
 });
 
 function MyApp({ Component, pageProps }) {
+    const socket = io(serverUrl, { transports: ["websocket"] });
+
     return (
         <ChakraProvider theme={theme}>
             <ApolloProvider client={client}>
