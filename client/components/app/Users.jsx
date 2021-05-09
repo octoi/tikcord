@@ -1,4 +1,5 @@
 import User from './users/User';
+import useSharedContext from '../../context/sharedContextHook';
 import styles from '../../styles/App.module.css';
 import { useState, useEffect } from 'react';
 import { Text } from '@chakra-ui/react';
@@ -24,10 +25,12 @@ function getUsers(posts) {
 
 export default function Users({ posts }) {
     const [users, setUsers] = useState([]);
+    const { onlineUsers } = useSharedContext();
 
     useEffect(() => {
         const newUsers = getUsers(posts);
-        setUsers(newUsers);
+        console.log(onlineUsers);
+        setUsers([...newUsers, ...onlineUsers]);
     }, [posts])
 
     return (
