@@ -17,7 +17,7 @@ export function SocketContext({ children, serverUrl }) {
     }, [serverUrl])
 
     useEffect(() => {
-        if (!socket || !user) return;
+        if (!socket || Object.keys(user).length === 0) return;
 
         socket.emit("make-connection", user, (res) => setOnlineUsers(Object.values(res.onlineUsers)));
 
@@ -25,7 +25,7 @@ export function SocketContext({ children, serverUrl }) {
 
         socket.on("user-left", users => setOnlineUsers(Object.values(users)))
 
-    }, [socket])
+    }, [socket, user])
 
     return (
         <SocketStateContext.Provider value={{ socket }}>
