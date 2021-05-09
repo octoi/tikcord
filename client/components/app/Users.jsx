@@ -44,7 +44,7 @@ export default function Users({ posts }) {
         const newUsers = getPostUsers(posts);
         const users = filterUsersArray([...newUsers, ...onlineUsers]);
         setUsers(users);
-    }, [posts])
+    }, [posts, onlineUsers])
 
     return (
         <section className={styles.posts}>
