@@ -9,6 +9,7 @@ export function SocketContext({ children, serverUrl }) {
     const [socket, setSocket] = useState();
 
     useEffect(() => {
+        if (socket) return;
         let sock = io(serverUrl, { transports: ["websocket"] });
         setSocket(sock);
     }, [serverUrl])
@@ -16,7 +17,9 @@ export function SocketContext({ children, serverUrl }) {
     useEffect(() => {
         if (!socket || !user) return;
 
-        socket.emit("make-connection")
+        socket.emit("make-connection", user, () => {
+
+        })
 
     }, [socket])
 
