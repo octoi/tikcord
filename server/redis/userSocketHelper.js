@@ -20,22 +20,12 @@ module.exports = {
         });
     },
 
-    getOneUser: id => {
-        return new Promise((resolve, reject) => {
-            client.HGET("online-user", id, (err, data) => {
-                if (err) reject(err);
-                resolve(data)
-            })
-        });
-    },
 
     removeOnlineUser: id => {
         return new Promise((resolve, reject) => {
-            module.exports.getOneUser(id).then(userData => {
-                client.HDEL("online-users", id, (err) => {
-                    if (err) reject(err);
-                    resolve(userData);
-                })
+            client.HDEL("online-users", id, (err) => {
+                if (err) reject(err);
+                resolve();
             })
         });
     }
