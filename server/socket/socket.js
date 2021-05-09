@@ -14,9 +14,9 @@ module.exports = (socket, io) => {
     });
 
     socket.on("disconnect", async () => {
-        userSocketHelper.removeOnlineUser(socket.id).then((user) => {
+        userSocketHelper.removeOnlineUser(socket.id).then(() => {
             userSocketHelper.getOnlineUsers().then(users => {
-                io.to("online").emit("user-left", { user, users });
+                io.to("online").emit("user-left", users);
             })
         })
     });
