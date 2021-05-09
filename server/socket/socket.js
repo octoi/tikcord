@@ -9,12 +9,15 @@ module.exports = (socket, io) => {
             userSocketHelper.getOnlineUsers().then(data => {
                 callback({ id: socket.id, onlineUsers: data })
             })
+            io.to("online").emit("user-join", userData);
         })
     });
 
     socket.on("disconnect", async () => {
-        userSocketHelper.removeOnlineUser(socket.id).then(() => {
-            io.to("online").emit("user-left");
+        userSocketHelper.removeOnlineUser(socket.id).then((user) => {
+            userSocketHelper.getOnlineUsers().then(users => {
+                io.to("online").emit("user-left", { user, users });
+            })
         })
     });
 
