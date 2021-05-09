@@ -4,6 +4,7 @@ import { Text, Avatar } from '@chakra-ui/react';
 
 export default function User({ user }) {
     const { user: currentUser } = useAuthContext();
+    if (typeof (user) == String) user = JSON.parse(user);
     const displayUser = currentUser?.email != user.email;
 
     return (
