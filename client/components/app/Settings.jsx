@@ -15,10 +15,15 @@ import {
 export default function NewPost({ isOpen, onClose }) {
     const [reloadOption, setReloadOption] = useState("default");
 
-    // useEffect(() => {
-    //     let setting = JSON.parse(cookie.get("setting"));
-    //     setReloadOption(setting.option);
-    // }, []);
+    useEffect(() => {
+        let setting = cookie.get("setting");
+        if (setting) setReloadOption(setting)
+    }, []);
+
+    const changeValue = (value) => {
+        cookie.set("setting", value);
+        setReloadOption(value)
+    }
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
@@ -27,7 +32,7 @@ export default function NewPost({ isOpen, onClose }) {
                 <ModalHeader>Settings</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                    <RadioGroup defaultValue={reloadOption} onChange={(val) => setReloadOption(val)}>
+                    <RadioGroup defaultValue={reloadOption} onChange={changeValue}>
                         <Stack spacing={5} direction="column">
                             <Radio colorScheme="twitter" value={"default"}>Ask me, What to do ??</Radio>
                             <Radio colorScheme="twitter" value={"reload"}>Reload every time without asking</Radio>
