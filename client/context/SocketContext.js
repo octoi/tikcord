@@ -17,8 +17,8 @@ export function SocketContext({ children, serverUrl }) {
     useEffect(() => {
         if (!socket || !user) return;
 
-        socket.emit("make-connection", user, () => {
-
+        socket.emit("make-connection", user, (res) => {
+            console.log(res)
         })
 
     }, [socket])
