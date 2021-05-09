@@ -25,4 +25,6 @@ const http = app.listen(port, () => {
 })
 
 const io = socket(http);
-io.on("connection", socketHandler)
+io.on("connection", socket => {
+    socketHandler(socket, io);
+})
