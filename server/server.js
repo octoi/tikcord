@@ -5,6 +5,7 @@ const socket = require("socket.io");
 const cors = require("cors");
 const { ApolloServer } = require("apollo-server-express");
 
+const socketHandler = require("./socket/socket");
 const typeDefs = require("./graphql/typeDefs");
 const resolvers = require("./graphql/resolvers");
 
@@ -24,6 +25,4 @@ const http = app.listen(port, () => {
 })
 
 const io = socket(http);
-io.on("connection", () => {
-    // console.log("user connected")
-})
+io.on("connection", socketHandler)
