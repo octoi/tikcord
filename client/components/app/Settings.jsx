@@ -31,7 +31,7 @@ export default function NewPost({ isOpen, onClose }) {
             <ModalContent>
                 <ModalHeader>Settings</ModalHeader>
                 <ModalCloseButton />
-                <ModalBody>
+                <ModalBody mb={5}>
                     <RadioGroup defaultValue={reloadOption} onChange={changeValue}>
                         <Stack spacing={5} direction="column">
                             <Radio colorScheme="twitter" value={"default"}>Ask me, What to do ??</Radio>
