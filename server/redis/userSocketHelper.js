@@ -18,6 +18,15 @@ module.exports = {
                 resolve(data)
             })
         });
+    },
+
+    removeOnlineUser: id => {
+        return new Promise((resolve, reject) => {
+            client.HDEL("online-users", id, (err) => {
+                if (err) reject(err);
+                resolve();
+            })
+        });
     }
 
 }
