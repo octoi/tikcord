@@ -6,15 +6,15 @@ import { HomeIcon, UserIcon, CogIcon, PlusCircleIcon } from '@heroicons/react/so
 import { useDisclosure } from '@chakra-ui/react';
 
 export default function Sidebar() {
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const newPostPopup = useDisclosure();
     const { user } = useAuthContext();
 
     return (
         <div className={styles.sidebar}>
             <IconButton Icon={HomeIcon} text="Home" link="/app" />
             <IconButton Icon={UserIcon} text="Profile" link={`/account/${user.email}`} mt />
-            <IconButton Icon={PlusCircleIcon} text="Create" mt solid onClick={onOpen} />
-            <NewPost isOpen={isOpen} onClose={onClose} />
+            <IconButton Icon={PlusCircleIcon} text="Create" mt solid onClick={newPostPopup.onOpen} />
+            <NewPost isOpen={newPostPopup.isOpen} onClose={newPostPopup.onClose} />
         </div>
     );
 }
