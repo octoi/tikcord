@@ -7,7 +7,7 @@ export const SocketStateContext = createContext();
 
 export function SocketContext({ children, serverUrl }) {
     const { user } = useUser();
-    const { setOnlineUsers } = useSharedContext();
+    const { setOnlineUsers, onlineUsers } = useSharedContext();
     const [socket, setSocket] = useState();
 
     useEffect(() => {
@@ -21,6 +21,14 @@ export function SocketContext({ children, serverUrl }) {
 
         socket.emit("make-connection", user, (res) => {
             setOnlineUsers(Object.values(res.onlineUsers))
+        });
+
+        socket.on("user-join", userData => {
+            setOnlineUsers([...onlineUsers, JSON.stringify(userData)]);
+        })
+
+        socket.on("user-left", data => {
+            console.log(data)
         })
 
     }, [socket])
