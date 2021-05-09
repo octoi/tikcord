@@ -19,17 +19,11 @@ export function SocketContext({ children, serverUrl }) {
     useEffect(() => {
         if (!socket || !user) return;
 
-        socket.emit("make-connection", user, (res) => {
-            setOnlineUsers(Object.values(res.onlineUsers))
-        });
+        socket.emit("make-connection", user, (res) => setOnlineUsers(Object.values(res.onlineUsers)));
 
-        socket.on("user-join", userData => {
-            setOnlineUsers([...onlineUsers, JSON.stringify(userData)]);
-        })
+        socket.on("user-join", userData => setOnlineUsers([...onlineUsers, JSON.stringify(userData)]));
 
-        socket.on("user-left", data => {
-            console.log(data)
-        })
+        socket.on("user-left", users => setOnlineUsers(Object.values(users)))
 
     }, [socket])
 
