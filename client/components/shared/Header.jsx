@@ -2,6 +2,7 @@ import styles from '../../styles/Header.module.css';
 import useAuthContext from '../../context/contextHook';
 import cookie from 'js-cookie';
 import NewPost from '../app/NewPost';
+import Settings from '../app/Settings';
 
 import { Avatar, Button, Stack, Menu, MenuList, MenuButton, MenuItem, useDisclosure } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
@@ -9,6 +10,7 @@ import { useRouter } from 'next/router';
 export default function Header() {
     const { user, setUser } = useAuthContext();
     const newPostPopup = useDisclosure();
+    const settingsPopup = useDisclosure();
 
     const router = useRouter();
 
@@ -33,11 +35,12 @@ export default function Header() {
                         <MenuList>
                             <MenuItem onClick={() => router.push("/app")} minH="48px">Home</MenuItem>
                             <MenuItem onClick={() => router.push(`/account/${user.email}`)} minH="48px">Profile</MenuItem>
-                            <MenuItem onClick={() => router.push(`/account/${user.email}`)} minH="48px">Settings</MenuItem>
+                            <MenuItem onClick={settingsPopup.onOpen} minH="48px">Settings</MenuItem>
                             <MenuItem onClick={newPostPopup.onOpen} color="teal.400" minH="48px">Create</MenuItem>
                             <MenuItem onClick={logout} color="red.400" minH="48px">Logout</MenuItem>
                         </MenuList>
                         <NewPost isOpen={newPostPopup.isOpen} onClose={newPostPopup.onClose} />
+                        <Settings isOpen={settingsPopup.isOpen} onClose={settingsPopup.onClose} />
                     </Menu>
                 )}
                 {!user.name && (
