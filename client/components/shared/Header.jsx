@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 
 export default function Header() {
     const { user, setUser } = useAuthContext();
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const newPostPopup = useDisclosure();
 
     const router = useRouter();
 
@@ -33,10 +33,11 @@ export default function Header() {
                         <MenuList>
                             <MenuItem onClick={() => router.push("/app")} minH="48px">Home</MenuItem>
                             <MenuItem onClick={() => router.push(`/account/${user.email}`)} minH="48px">Profile</MenuItem>
-                            <MenuItem onClick={onOpen} color="teal.400" minH="48px">Create</MenuItem>
+                            <MenuItem onClick={() => router.push(`/account/${user.email}`)} minH="48px">Settings</MenuItem>
+                            <MenuItem onClick={newPostPopup.onOpen} color="teal.400" minH="48px">Create</MenuItem>
                             <MenuItem onClick={logout} color="red.400" minH="48px">Logout</MenuItem>
                         </MenuList>
-                        <NewPost isOpen={isOpen} onClose={onClose} />
+                        <NewPost isOpen={newPostPopup.isOpen} onClose={newPostPopup.onClose} />
                     </Menu>
                 )}
                 {!user.name && (
