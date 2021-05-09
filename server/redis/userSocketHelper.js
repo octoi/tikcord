@@ -5,7 +5,6 @@ module.exports = {
         return new Promise((resolve, reject) => {
             client.HSET("online-users", socketId, userData, (err, data) => {
                 if (err) reject(err);
-                console.log(data)
                 resolve(err);
             })
         });
