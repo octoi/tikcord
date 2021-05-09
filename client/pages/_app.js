@@ -1,10 +1,10 @@
 import '../styles/globals.css';
 import cookie from 'js-cookie';
 import Header from '../components/shared/Header';
-import io from 'socket.io-client';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { AppContext } from '../context/AppContext';
 import { SharedContext } from '../context/SharedContext';
+import { SocketContext } from '../context/SocketContext';
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from 'apollo-link-context';
 
@@ -35,15 +35,16 @@ const client = new ApolloClient({
 });
 
 function MyApp({ Component, pageProps }) {
-    const socket = io(serverUrl, { transports: ["websocket"] });
 
     return (
         <ChakraProvider theme={theme}>
             <ApolloProvider client={client}>
                 <AppContext>
                     <SharedContext>
-                        <Header />
-                        <Component {...pageProps} />
+                        <SocketContext serverUrl={serverUrl}>
+                            <Header />
+                            <Component {...pageProps} />
+                        </SocketContext>
                     </SharedContext>
                 </AppContext>
             </ApolloProvider>
