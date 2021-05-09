@@ -16,7 +16,7 @@ const theme = extendTheme({
     }
 });
 
-const serverUrl = process.env.SERVER_URL || 'http://localhost:8080';
+const serverUrl = process.env.SERVER_URL || 'http://localhost:5000';
 
 const httpLink = createHttpLink({ uri: serverUrl + "/gql" });
 

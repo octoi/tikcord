@@ -20,7 +20,7 @@ const port = process.env.PORT || 5000;
 // server.listen(port).then(({ url }) => )
 
 const http = app.listen(port, () => {
-    console.log(`[INFO] Server started at http://localhost:8080`);
+    console.log(`[INFO] Server started at http://localhost:5000`);
 })
 
 const io = socket(http);
