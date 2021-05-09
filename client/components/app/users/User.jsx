@@ -6,6 +6,8 @@ export default function User({ user }) {
     const { user: currentUser } = useAuthContext();
     const displayUser = currentUser?.email != user.email;
 
+    if (Object.keys(user).length === 0) return;
+
     return (
         <>
             {displayUser && (
