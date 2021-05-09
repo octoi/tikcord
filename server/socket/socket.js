@@ -7,7 +7,7 @@ module.exports = (socket, io) => {
         userSocketHelper.addUser(JSON.stringify(userData), socket.id).then(() => {
             socket.join("online");
             userSocketHelper.getOnlineUsers().then(data => {
-                callback({ id: socket.id, onlineUser: data })
+                callback({ id: socket.id, onlineUsers: data })
             })
         })
     });
