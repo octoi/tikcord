@@ -25,6 +25,10 @@ export function SocketContext({ children, serverUrl }) {
 
         socket.on("user-left", users => setOnlineUsers(Object.values(users)))
 
+        socket.on("update", () => {
+            alert("updated")
+        })
+
     }, [socket, user])
 
     return (
