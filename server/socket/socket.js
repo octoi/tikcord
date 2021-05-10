@@ -1,6 +1,7 @@
 const socketIo = require("socket.io");
 const userSocketHelper = require("../redis/userSocketHelper");
 
+
 function handler(socket, io) {
     socket.on("make-connection", (userData, callback) => {
         userSocketHelper.addUser(JSON.stringify(userData), socket.id).then(() => {
@@ -26,7 +27,7 @@ function init(http) {
 
     io.on("connection", socket => {
         handler(socket, io);
-    })
+    });
 }
 
 module.exports = init;
