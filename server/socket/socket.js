@@ -20,6 +20,10 @@ function handler(socket, io) {
             })
         })
     });
+
+    socket.on("emit-update", () => {
+        io.to("online").emit("update")
+    })
 }
 
 function init(http) {
