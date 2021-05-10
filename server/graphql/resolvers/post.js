@@ -15,10 +15,7 @@ const {
     addPostToCache: addPostToCache,
     deleteAPost: deleteAPostFromCache
 } = require("../../redis/helper");
-// const { emitUpdate } = require("../../socket/io");
-const emitUpdate = () => {
-    console.log("update")
-}
+
 
 const Mutation = {
 
@@ -37,8 +34,6 @@ const Mutation = {
         const data = await createAPost(postData);
         await addPostToCache({ ...data, creator: user }); // adding data to cache
 
-        emitUpdate()
-
         return {
             ...data,
             creator: user
@@ -52,8 +47,6 @@ const Mutation = {
         await deleteAPostFromCache(id);
 
         await deleteUserPost(id, user);
-
-        emitUpdate()
 
         return "deleted";
 
@@ -69,10 +62,6 @@ const Mutation = {
 
         await likeAPost(like);
 
-        emitUpdate()
-
-        return like;
-
     },
 
     commentPost: async (_, data, context) => {
@@ -86,8 +75,6 @@ const Mutation = {
 
         await createComment(comment);
 
-        emitUpdate()
-
         return comment;
     },
 
@@ -96,10 +83,7 @@ const Mutation = {
 
         const deleteComment = await removeComment(user, comment);
 
-        if (deleteComment) {
-            emitUpdate()
-            return "deleted";
-        }
+        if (deleteComment) return "deleted";
     }
 
 }
