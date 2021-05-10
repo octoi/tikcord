@@ -23,9 +23,13 @@ export function SocketContext({ children, serverUrl }) {
 
         socket.on("user-join", userData => setOnlineUsers([...onlineUsers, JSON.stringify(userData)]));
 
-        socket.on("user-left", users => setOnlineUsers(Object.values(users)))
+        socket.on("user-left", users => {
+            if (!users) return;
+            setOnlineUsers(Object.values(users))
+        })
 
         socket.on("update", () => {
+            console.log("update")
             alert("updated")
         })
 
