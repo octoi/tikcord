@@ -1,5 +1,6 @@
 import styles from '../../../styles/Post.module.css';
 import useAuthContext from '../../../context/contextHook';
+import useSocketContext from '../../../context/socketContextHook';
 import Link from 'next/link';
 import Utils from './Utils';
 import DELETE_POST_QUERY from '../../../utils/graphql/deletePostQuery';
@@ -9,6 +10,7 @@ import { Image, Avatar, Text, Button } from '@chakra-ui/react';
 
 export default function Post({ post }) {
     const { user } = useAuthContext();
+    const { socket } = useSocketContext();
 
     const router = useRouter();
 
