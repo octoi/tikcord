@@ -21,8 +21,8 @@ function handler(socket, io) {
         })
     });
 
-    socket.on("emit-update", () => {
-        io.to("online").emit("update")
+    socket.on("emit-update", email => {
+        io.emit("update", email)
     })
 }
 
