@@ -1,5 +1,4 @@
 import cookie from 'js-cookie';
-import useSharedContext from '../../context/sharedContextHook';
 import { useState, useEffect } from 'react';
 import {
     Modal,
@@ -14,11 +13,16 @@ import {
 } from '@chakra-ui/react';
 
 export default function NewPost({ isOpen, onClose }) {
-    const { setting, setSetting } = useSharedContext();
+    const [reloadOption, setReloadOption] = useState("default");
+
+    useEffect(() => {
+        let setting = cookie.get("setting");
+        if (setting) setReloadOption(setting)
+    }, []);
 
     const changeValue = (value) => {
         cookie.set("setting", value);
-        setSetting(value)
+        setReloadOption(value)
     }
 
     return (
@@ -28,7 +32,7 @@ export default function NewPost({ isOpen, onClose }) {
                 <ModalHeader>Settings</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody mb={5}>
-                    <RadioGroup defaultValue={setting} onChange={changeValue}>
+                    <RadioGroup defaultValue={reloadOption} onChange={changeValue}>
                         <Stack spacing={5} direction="column">
                             <Radio colorScheme="twitter" value={"default"}>Ask me, What to do ??</Radio>
                             <Radio colorScheme="twitter" value={"reload"}>Reload every time without asking</Radio>
