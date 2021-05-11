@@ -35,8 +35,20 @@ export function SocketContext({ children, serverUrl }) {
 
     }, [socket, user])
 
+    // socket functions
+
+    const emitUpdate = () => {
+        if (!socket) return;
+        socket.emit("emit-update")
+    }
+
+    const values = {
+        socket,
+        emitUpdate
+    }
+
     return (
-        <SocketStateContext.Provider value={{ socket }}>
+        <SocketStateContext.Provider value={values}>
             {children}
         </SocketStateContext.Provider>
     );
