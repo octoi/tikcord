@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import cookie from 'js-cookie';
 import useUser from './contextHook';
 import useSharedContext from './sharedContextHook';
 import { createContext, useState, useEffect } from 'react';
@@ -31,8 +32,17 @@ export function SocketContext({ children, serverUrl }) {
         socket.on("update", email => {
             if (email === user.email) return;
 
-            const permission = confirm("Do you wanna reload for latest changes ??");
-            if (permission) window.location.reload();
+            let setting = cookie.get("setting");
+
+            if (setting === "reload") {
+                window.location.reload();
+                return;
+            }
+            if (setting === "no_reload") return;
+            else {
+                const permission = confirm("Do you wanna reload for latest changes ??");
+                if (permission) window.location.reload();
+            }
         })
 
     }, [socket, user])
