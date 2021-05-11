@@ -28,9 +28,11 @@ export function SocketContext({ children, serverUrl }) {
             setOnlineUsers(Object.values(users))
         })
 
-        socket.on("update", () => {
-            console.log("update")
-            alert("updated")
+        socket.on("update", email => {
+            if (email === user.email) return;
+
+            const permission = confirm("Do you wanna reload for latest changes ??");
+            if (permission) window.location.reload();
         })
 
     }, [socket, user])
@@ -39,7 +41,7 @@ export function SocketContext({ children, serverUrl }) {
 
     const emitUpdate = () => {
         if (!socket) return;
-        socket.emit("emit-update")
+        socket.emit("emit-update", user.email)
     }
 
     const values = {
