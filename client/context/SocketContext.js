@@ -45,6 +45,10 @@ export function SocketContext({ children, serverUrl }) {
             }
         })
 
+        return (() => {
+            socket.emit("quit");
+        })
+
     }, [socket, user])
 
     // socket functions

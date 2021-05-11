@@ -22,6 +22,14 @@ function handler(socket, io) {
         })
     });
 
+    socket.on("quit", async () => {
+        userSocketHelper.removeOnlineUser(socket.id).then(() => {
+            userSocketHelper.getOnlineUsers().then(users => {
+                io.to("online").emit("user-left", users);
+            })
+        })
+    });
+
     socket.on("emit-update", email => {
         io.emit("update", email)
     })
