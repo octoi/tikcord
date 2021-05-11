@@ -1,4 +1,5 @@
 import useAuthContext from '../../../context/contextHook';
+import useSocketContext from '../../../context/socketContextHook';
 import Link from 'next/link';
 import COMMENT_POST_QUERY from '../../../utils/graphql/commentPostQuery';
 import DELETE_COMMENT_QUERY from '../../../utils/graphql/deleteCommentQuery';
@@ -20,7 +21,6 @@ import {
 } from '@chakra-ui/react';
 
 
-
 export default function Comment({ isOpen, onClose, post }) {
     const [comment, setComment] = useState("");
     const [commentId, setCommentId] = useState("");
@@ -28,6 +28,7 @@ export default function Comment({ isOpen, onClose, post }) {
     const [loader, setLoader] = useState(false);
 
     const { user } = useAuthContext();
+    const { emitUpdate } = useSocketContext();
     const router = useRouter();
 
     const [CommentPost] = useMutation(COMMENT_POST_QUERY, {
@@ -42,6 +43,7 @@ export default function Comment({ isOpen, onClose, post }) {
             setPostData({ ...postData, comments });
             setComment("");
             setLoader(false);
+            emitUpdate();
         },
         onError: (err) => {
             console.log(err.message);
@@ -55,6 +57,7 @@ export default function Comment({ isOpen, onClose, post }) {
             comments = comments.filter(comment => comment.id !== commentId);
 
             setPostData({ ...postData, comments })
+            emitUpdate();
 
         },
         onError: (err) => {
