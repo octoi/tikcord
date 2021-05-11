@@ -1,4 +1,5 @@
 import useAuthContext from '../../../context/contextHook';
+import useSocketContext from '../../../context/socketContextHook';
 import LIKE_POST_QUERY from '../../../utils/graphql/likePostQuery';
 import Comment from './Comment';
 import { useState, useEffect } from 'react';
@@ -8,6 +9,7 @@ import { HeartIcon as OutlinedHeart, AnnotationIcon } from '@heroicons/react/out
 
 export default function Utils({ post: postData }) {
     const { user } = useAuthContext();
+    const { emitUpdate } = useSocketContext();
     const { isOpen, onClose, onOpen } = useDisclosure();
     const [userLiked, setUserLiked] = useState(false);
     const [post, setPost] = useState(postData);
@@ -33,6 +35,7 @@ export default function Utils({ post: postData }) {
         setUserLiked(!userLiked)
         setPost({ ...post, likeCount: userLiked ? post.likeCount - 1 : post.likeCount + 1 })
         LikePost();
+        emitUpdate();
     }
 
 
