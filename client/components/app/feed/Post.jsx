@@ -10,7 +10,7 @@ import { Image, Avatar, Text, Button } from '@chakra-ui/react';
 
 export default function Post({ post }) {
     const { user } = useAuthContext();
-    const { socket } = useSocketContext();
+    const { emitUpdate } = useSocketContext();
 
     const router = useRouter();
 
@@ -21,6 +21,7 @@ export default function Post({ post }) {
             alert("Oops something went wrong !")
         },
         update: () => {
+            emitUpdate();
             router.reload(window.location.pathname);
         }
     })
